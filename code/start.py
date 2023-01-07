@@ -4,11 +4,11 @@ import pygame
 
 from funcs import load_image
 
+screen_size = width, height = (800, 500)
+
 
 def start_screen():
-    from main import screen_size, clock, FPS, running
-
-    width, height = screen_size
+    from main import clock, FPS, running
     screen = pygame.display.set_mode(screen_size)
     fon = pygame.transform.scale(load_image('start_background.png'), screen_size)
     screen.blit(fon, (0, 0))
@@ -28,8 +28,8 @@ def start_screen():
 
 
 def draw(screen):
-    from main import btn_bg_group, Background
-    width, height = screen.get_size()
+    from sprites import btn_bg_group, Background
+    width, height = screen_size
     font = pygame.font.Font(None, 50)
     texts = ["New game", "Continue", "Load"]
     for i in range(3):
