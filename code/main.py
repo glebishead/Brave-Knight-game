@@ -82,6 +82,18 @@ sprite_group = SpriteGroup()
 hero_group = SpriteGroup()
 
 
+btn_bg_group = SpriteGroup()
+
+
+class Background(Sprite):
+    def __init__(self, w, h, x, y):
+        super().__init__(btn_bg_group)
+        self.image = load_image('bg_button.png')
+        self.image = pygame.transform.scale(self.image, (w // 3 - 10, h // 10 - 5))
+        self.rect = self.image.get_rect().move(
+            x, y)
+
+
 def generate_level(level):
     new_player, x, y = None, None, None
     for y in range(len(level)):
@@ -129,6 +141,15 @@ while running:
                 move(hero, "left")
             elif event.key == pygame.K_RIGHT:
                 move(hero, "right")
+    # keys = pygame.key.get_pressed()
+    # if keys[pygame.K_UP]:
+    #     move(hero, "up")
+    # elif keys[pygame.K_DOWN]:
+    #     move(hero, "down")
+    # elif keys[pygame.K_LEFT]:
+    #     move(hero, "left")
+    # elif keys[pygame.K_RIGHT]:
+    #     move(hero, "right")
     screen.fill(pygame.Color("black"))
     sprite_group.draw(screen)
     hero_group.draw(screen)

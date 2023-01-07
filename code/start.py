@@ -28,8 +28,16 @@ def start_screen():
 
 
 def draw(screen):
+    from main import btn_bg_group, Background
     width, height = screen.get_size()
-    pygame.draw.rect(screen, (180, 20, 20), [width // 3 * 2, 10, width // 3 - 10, height // 10])
-    font = pygame.font.Font(None, 30)
-    text = font.render("New game", True, (10, 25, 10))
-    screen.blit(text, (width // 3 * 2 + 10, height // 10 - height // 20))
+    font = pygame.font.Font(None, 50)
+    texts = ["New game", "Continue", "Load"]
+    for i in range(3):
+        bg = Background(width, height, width // 3 * 2, 10 + i * height // 10)
+    btn_bg_group.draw(screen)
+    for i in range(3):
+        pygame.draw.rect(screen, (120, 55, 0), [
+            width // 3 * 2, 10 + i * height // 10,
+            width // 3 - 10, height // 10 - 5], 5)
+        screen.blit(font.render(texts[i], True, (190, 255, 190)),
+                    (width // 3 * 2 + 10, (i + 1) * height // 10 - height // 20 - 10))
