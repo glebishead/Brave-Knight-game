@@ -4,10 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c81646a3-776d-47eb-8e37-663ce51227fa" name="Changes" comment="Moved the image upload functions to a separate file">
+    <list default="true" id="c81646a3-776d-47eb-8e37-663ce51227fa" name="Changes" comment="Moved the start screen code to a separate file for convenience">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/code/funcs.py" beforeDir="false" afterPath="$PROJECT_DIR$/code/funcs.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/code/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/code/main.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/code/start.py" beforeDir="false" afterPath="$PROJECT_DIR$/code/start.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -139,7 +139,7 @@
       <updated>1673086639814</updated>
       <workItem from="1673086642538" duration="2458000" />
       <workItem from="1673089126552" duration="638000" />
-      <workItem from="1673089771691" duration="2707000" />
+      <workItem from="1673089771691" duration="4652000" />
     </task>
     <task id="LOCAL-00001" summary="Copied code from lesson. Let's start changes!">
       <created>1673088816083</created>
@@ -169,7 +169,21 @@
       <option name="project" value="LOCAL" />
       <updated>1673090745866</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="Moved the start screen code to a separate file for convenience">
+      <created>1673092710951</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1673092710951</updated>
+    </task>
+    <task id="LOCAL-00006" summary="Moved the start screen code to a separate file for convenience">
+      <created>1673092735024</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1673092735024</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -190,10 +204,11 @@
     <MESSAGE value="I did nothing..." />
     <MESSAGE value="Copied code from lesson. Let's start changes!" />
     <MESSAGE value="Moved the image upload functions to a separate file" />
-    <option name="LAST_COMMIT_MESSAGE" value="Moved the image upload functions to a separate file" />
+    <MESSAGE value="Moved the start screen code to a separate file for convenience" />
+    <option name="LAST_COMMIT_MESSAGE" value="Moved the start screen code to a separate file for convenience" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/Brave_Knight_game$main__1_.coverage" NAME="main (1) Coverage Results" MODIFIED="1673092500733" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/code" />
+    <SUITE FILE_PATH="coverage/Brave_Knight_game$main__1_.coverage" NAME="main (1) Coverage Results" MODIFIED="1673094462091" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/code" />
     <SUITE FILE_PATH="coverage/Brave_Knight_game$main.coverage" NAME="main Coverage Results" MODIFIED="1673089668451" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/py_files" />
   </component>
 </project>

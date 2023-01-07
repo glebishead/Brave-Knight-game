@@ -6,34 +6,30 @@ from funcs import load_image
 
 
 def start_screen():
-    from main import screen, screen_size, clock, FPS, running
-    
-    intro_text = ["Перемещение героя", "",
-                  "Герой двигается",
-                  "Карта на месте"]
+    from main import screen_size, clock, FPS, running
 
-    fon = pygame.transform.scale(load_image('fon.jpg'), screen_size)
+    width, height = screen_size
+    screen = pygame.display.set_mode(screen_size)
+    fon = pygame.transform.scale(load_image('start_background.png'), screen_size)
     screen.blit(fon, (0, 0))
-    font = pygame.font.Font(None, 30)
-    text_coord = 50
-    for line in intro_text:
-        string_rendered = font.render(line, 1, pygame.Color('black'))
-        intro_rect = string_rendered.get_rect()
-        text_coord += 10
-        intro_rect.top = text_coord
-        intro_rect.x = 10
-        text_coord += intro_rect.height
-        screen.blit(string_rendered, intro_rect)
 
     while running:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = False
-            elif event.type == pygame.KEYDOWN or \
-                    event.type == pygame.MOUSEBUTTONDOWN:
-                return
+            elif event.type == pygame.MOUSEBUTTONDOWN:
+                if width // 3 * 2 <= event.pos[0] <= width - 10 and 10 <= event.pos[1] <= height // 10:
+                    return
+        draw(screen)
         pygame.display.flip()
         clock.tick(FPS)
     pygame.quit()
     sys.exit()
-        
+
+
+def draw(screen):
+    width, height = screen.get_size()
+    pygame.draw.rect(screen, (180, 20, 20), [width // 3 * 2, 10, width // 3 - 10, height // 10])
+    font = pygame.font.Font(None, 30)
+    text = font.render("New game", True, (10, 25, 10))
+    screen.blit(text, (width // 3 * 2 + 10, height // 10 - height // 20))

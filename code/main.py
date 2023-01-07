@@ -8,7 +8,7 @@ from start import start_screen
 
 
 pygame.init()
-screen_size = (500, 500)
+screen_size = (800, 500)
 screen = pygame.display.set_mode(screen_size)
 FPS = 50
 
@@ -19,6 +19,12 @@ tile_images = {
 player_image = load_image('mar.png')
 
 tile_width = tile_height = 50
+
+
+icon = load_image('icon.png')
+
+pygame.display.set_icon(icon)
+pygame.display.set_caption("Brave knight")
 
 
 class ScreenFrame(pygame.sprite.Sprite):
