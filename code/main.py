@@ -3,7 +3,7 @@ import pygame
 
 from funcs import load_image
 from start import start_screen
-from sprites import hero_group, sprite_group
+from sprites import hero_group, Player
 
 
 pygame.init()
@@ -17,15 +17,12 @@ tile_images = {
 }
 player_image = load_image('mar.png')
 
-tile_width = tile_height = 50
-
-
 icon = load_image('icon.png')
 
 pygame.display.set_icon(icon)
 pygame.display.set_caption("Brave knight")
 
-player = None
+player = Player(300, 400)
 running = True
 clock = pygame.time.Clock()
 
@@ -35,20 +32,32 @@ start_screen()
 
 def main_screen():
     global running
+    fon = pygame.transform.scale(load_image('lvl1.png'), screen_size)
+    screen.blit(fon, (0, 0))
     while running:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = False
-        # keys = pygame.key.get_pressed()
-        # if keys[pygame.K_UP]:
-        #     move(hero, "up")
-        # elif keys[pygame.K_DOWN]:
-        #     move(hero, "down")
-        # elif keys[pygame.K_LEFT]:
-        #     move(hero, "left")
-        # elif keys[pygame.K_RIGHT]:
-        #     move(hero, "right")
-        screen.fill(pygame.Color("black"))
+        keys = pygame.key.get_pressed()
+        if keys[pygame.K_UP]:
+            player.speed_y -= 2
+        if keys[pygame.K_DOWN]:
+            player.speed_y += 2
+        if keys[pygame.K_LEFT]:
+            player.speed_x -= 2
+        if keys[pygame.K_RIGHT]:
+            player.speed_x += 2
+        if keys[pygame.K_w]:
+            player.speed_y -= 2
+        if keys[pygame.K_s]:
+            player.speed_y += 2
+        if keys[pygame.K_a]:
+            player.speed_x -= 2
+        if keys[pygame.K_d]:
+            player.speed_x += 2
+        player.move()
+        screen.blit(fon, (0, 0))
+        hero_group.draw(screen)
         clock.tick(FPS)
         pygame.display.flip()
     pygame.quit()

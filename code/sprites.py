@@ -23,18 +23,18 @@ class Sprite(pygame.sprite.Sprite):
 
 class Player(Sprite):
     def __init__(self, pos_x, pos_y):
-        from main import tile_width, tile_height, player_image
+        from main import player_image
         super().__init__(hero_group)
-        self.image = pygame.transform.scale(player_image, (tile_width, tile_height))
-        self.rect = self.image.get_rect().move(
-            tile_width * pos_x + 15, tile_height * pos_y + 5)
+        self.image = pygame.transform.scale(player_image, (30, 40))
+        self.rect = self.image.get_rect().move(300, 400)
         self.pos = (pos_x, pos_y)
+        self.speed_x, self.speed_y = 0, 0
 
-    def move(self, x, y):
-        from main import tile_width, tile_height
-        self.pos = (x, y)
-        self.rect = self.image.get_rect().move(
-            tile_width * self.pos[0] + 15, tile_height * self.pos[1] + 5)
+    def move(self):
+        x, y = self.pos
+        self.pos = x + self.speed_x, y + self.speed_y
+        self.rect = self.image.get_rect().move(self.pos)
+        self.speed_y, self.speed_x = 0, 0
 
 
 class Background(Sprite):
