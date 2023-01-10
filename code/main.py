@@ -11,10 +11,6 @@ screen_size = (800, 500)
 screen = pygame.display.set_mode(screen_size)
 FPS = 50
 
-tile_images = {
-    'wall': load_image('box.png'),
-    'empty': load_image('grass.png')
-}
 player_image = load_image('mar.png')
 
 icon = load_image('icon.png')
@@ -56,6 +52,12 @@ def main_screen():
         if keys[pygame.K_d]:
             player.speed_x += 2
         player.move()
+        if player.location == 1:
+            fon = pygame.transform.scale(load_image('lvl1.png'), screen_size)
+        if player.location == 2:
+            fon = pygame.transform.scale(load_image('lvl2.png'), screen_size)
+        if player.location == 3:
+            fon = pygame.transform.scale(load_image('lvl3.png'), screen_size)
         screen.blit(fon, (0, 0))
         hero_group.draw(screen)
         clock.tick(FPS)
