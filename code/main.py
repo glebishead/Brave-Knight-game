@@ -2,8 +2,9 @@ import sys
 import pygame
 import os
 
-from funcs import load_image
-from sprites import all_sprites, Tree, Player
+from funcs import load_image, load_level
+from sprites import all_sprites, Decoration, Tile
+from Player import Player
 from start import start_screen
 
 
@@ -34,7 +35,17 @@ class Game:
 	def init_game(self):
 		self.player = Player(load_image('hero_sheet.png'), 6, 2, 300, 400)
 		for i in range(2):
-			self.tree = Tree(i * 60, i * 120)
+			self.tree = Decoration(load_image('tree.png'), i * 60, i * 120)
+		self.generate_level()
+	
+	def generate_level(self):
+		level = load_level('map.map')
+		for y in range(len(level)):
+			for x in range(len(level[y])):
+				if level[y][x] == '.':
+					pass
+				elif level[y][x] == '#':
+					Tile(load_image('wall.png'), x, y)
 		
 	def run(self):
 		self.fon = pygame.transform.scale(load_image('fon.png'), self.screen_size)
@@ -46,6 +57,8 @@ class Game:
 			all_sprites.get_surface()
 			self.screen.blit(self.fon, (0, 0))
 			all_sprites.custom_draw(self.player)
+			for el in all_sprites:
+				print(el)
 			self.player.input_keys(pygame.key.get_pressed())
 			self.player.update()
 			pygame.display.update()
