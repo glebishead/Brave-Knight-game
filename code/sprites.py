@@ -23,15 +23,14 @@ class Sprite(pygame.sprite.Sprite):
 
 class Player(Sprite):
 	def __init__(self, sheet, columns, rows, pos_x, pos_y, start_location=1):
-		super().__init__(hero_group)
+		super().__init__(all_sprites)
 		self.frames = []
 		self.cut_sheet(sheet, columns, rows, pos_x, pos_y)
 		self.cur_frame = 0
 		self.image = self.frames[self.cur_frame]
 		self.t = pygame.time.get_ticks()
 		self.pos = (pos_x, pos_y)
-		from main import speed
-		self.speed = speed
+		self.speed = 4
 		self.is_moving = False
 		self.direction = None
 		self.flag_le = False
@@ -64,6 +63,23 @@ class Player(Sprite):
 		self.t = pygame.time.get_ticks()
 		self.move()
 	
+	def input_keys(self, keys):
+		if keys[pygame.K_UP] or keys[pygame.K_w]:
+			self.direction = 'up'
+			self.is_moving = True
+		elif keys[pygame.K_DOWN] or keys[pygame.K_s]:
+			self.direction = 'down'
+			self.is_moving = True
+		
+		if keys[pygame.K_LEFT] or keys[pygame.K_a]:
+			self.direction = 'left'
+			self.is_moving = True
+			self.flag_le = True
+		elif keys[pygame.K_RIGHT] or keys[pygame.K_d]:
+			self.direction = 'right'
+			self.is_moving = True
+			self.flag_le = False
+	
 	def move(self):
 		x, y = self.pos
 		if self.is_moving:
@@ -76,39 +92,16 @@ class Player(Sprite):
 					x -= self.speed
 				case 'right':
 					x += self.speed
-		from main import screen_size
-		if self.location == 1:
-			if x <= 0 and y <= 0:
-				self.location = 2
-				x, y = screen_size[0] - 30, screen_size[1] - 40
-		elif self.location == 2:
-			if x <= 0 and 220 <= y <= 300:
-				self.location = 3
-				x, y = screen_size[0] - 30, screen_size[1] - 220
-			if x + 30 > screen_size[0] and y + 40 > screen_size[1]:
-				self.location = 1
-				x, y = 10, 10
-		elif self.location == 3:
-			if x + 30 >= screen_size[0] and 220 <= y <= 300:
-				self.location = 2
-				x, y = 10, screen_size[1] - 220
-		if x < 0:
-			x = 0
-		elif x > screen_size[0] - 30:
-			x = screen_size[0] - 30
-		if y < 0:
-			y = 0
-		elif y > screen_size[1] - 40:
-			y = screen_size[1] - 40
-		self.direction = None
+		self.is_moving = False
 		self.pos = x, y
 		self.rect = self.image.get_rect().move(self.pos)
 
 
-# class Tree(Sprite):
-#     def __init__(self, x, y):
-#         super().__init__(trees_group)
-#         self.image = pygame.
+class Tree(Sprite):
+	def __init__(self, x, y):
+		super().__init__(all_sprites)
+		self.image = load_image('tree.png')
+		self.rect = self.image.get_rect().move(x, y)
 
 
 class Background(Sprite):
@@ -120,7 +113,27 @@ class Background(Sprite):
 			x, y)
 
 
+class CameraGroup(SpriteGroup):
+	def __init__(self):
+		super().__init__()
+		self.display_surface = pygame.display.get_surface()
+		self.offset = pygame.math.Vector2()
+	
+	def get_surface(self):
+		self.display_surface = pygame.display.get_surface()
+		self.half_width = self.display_surface.get_size()[0] // 2
+		self.half_height = self.display_surface.get_size()[1] // 2
+
+	def custom_draw(self, player):
+		self.offset.x = player.rect.centerx - self.half_width
+		self.offset.y = player.rect.centery - self.half_height
+
+		for sprite in self.sprites():
+			offset_pos = sprite.rect.topleft - self.offset
+			self.display_surface.blit(sprite.image, offset_pos)
+
+
 sprite_group = SpriteGroup()
-hero_group = SpriteGroup()
+all_sprites = CameraGroup()
 btn_bg_group = SpriteGroup()
 trees_group = SpriteGroup()

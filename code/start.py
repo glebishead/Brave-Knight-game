@@ -8,7 +8,7 @@ screen_size = width, height = (800, 500)
 
 
 def start_screen():
-    from main import clock, FPS, running
+    running = True
     screen = pygame.display.set_mode(screen_size)
     fon = pygame.transform.scale(load_image('start_background.png'), screen_size)
     screen.blit(fon, (0, 0))
@@ -22,7 +22,6 @@ def start_screen():
                     return
         draw(screen)
         pygame.display.flip()
-        clock.tick(FPS)
     pygame.quit()
     sys.exit()
 
