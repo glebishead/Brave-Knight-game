@@ -10,15 +10,14 @@ pygame.init()
 screen_size = (800, 500)
 screen = pygame.display.set_mode(screen_size)
 FPS = 50
-
-player_image = load_image('mar.png')
+speed = 1.5
 
 icon = load_image('icon.png')
 
 pygame.display.set_icon(icon)
 pygame.display.set_caption("Brave knight")
 
-player = Player(300, 400)
+player = Player(load_image('hero_sheet.png'), 6, 2, 300, 400)
 running = True
 clock = pygame.time.Clock()
 
@@ -35,22 +34,21 @@ def main_screen():
             if event.type == pygame.QUIT:
                 running = False
         keys = pygame.key.get_pressed()
-        if keys[pygame.K_UP]:
-            player.speed_y -= 2
-        if keys[pygame.K_DOWN]:
-            player.speed_y += 2
-        if keys[pygame.K_LEFT]:
-            player.speed_x -= 2
-        if keys[pygame.K_RIGHT]:
-            player.speed_x += 2
-        if keys[pygame.K_w]:
-            player.speed_y -= 2
-        if keys[pygame.K_s]:
-            player.speed_y += 2
-        if keys[pygame.K_a]:
-            player.speed_x -= 2
-        if keys[pygame.K_d]:
-            player.speed_x += 2
+        if keys[pygame.K_UP] or keys[pygame.K_w]:
+            player.direction = 'up'
+            player.is_moving = True
+        elif keys[pygame.K_DOWN] or keys[pygame.K_s]:
+            player.direction = 'down'
+            player.is_moving = True
+        
+        if keys[pygame.K_LEFT] or keys[pygame.K_a]:
+            player.direction = 'left'
+            player.is_moving = True
+        elif keys[pygame.K_RIGHT] or keys[pygame.K_d]:
+            player.direction = 'right'
+            player.is_moving = True
+        
+        player.update()
         player.move()
         if player.location == 1:
             fon = pygame.transform.scale(load_image('lvl1.png'), screen_size)
