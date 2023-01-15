@@ -11,7 +11,8 @@ class Player(Sprite):
 		self.image = self.frames[self.cur_frame]
 		self.t = pygame.time.get_ticks()
 		self.pos = (pos_x, pos_y)
-		self.speed = 10
+		self.mask = pygame.mask.from_surface(self.image)
+		self.speed = 5
 		self.is_moving = False
 		self.direction = None
 		self.flag_le = False
@@ -64,6 +65,18 @@ class Player(Sprite):
 	def move(self):
 		x, y = self.pos
 		if self.is_moving:
+			for sprite in all_sprites:
+				if self.rect.colliderect(sprite) and self != sprite:
+					print(self.rect.topleft, self.rect.bottomright)
+					print(sprite.rect.topleft, sprite.rect.bottomright)
+					if sprite.rect.bottom - self.speed == self.rect.top and self.direction == 'up':
+						self.direction = None
+					elif sprite.rect.top + self.speed == self.rect.bottom and self.direction == 'down':
+						self.direction = None
+					elif sprite.rect.right - self.speed == self.rect.left and self.direction == 'left':
+						self.direction = None
+					elif sprite.rect.left + self.speed == self.rect.right and self.direction == 'right':
+						self.direction = None
 			match self.direction:
 				case 'up':
 					y -= self.speed
@@ -76,3 +89,4 @@ class Player(Sprite):
 		self.is_moving = False
 		self.pos = x, y
 		self.rect = self.image.get_rect().move(self.pos)
+		

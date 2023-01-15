@@ -43,9 +43,10 @@ tile_width = tile_height = 50
 class Tile(Sprite):
 	def __init__(self, image, pos_x, pos_y):
 		super().__init__(all_sprites)
-		self.image = pygame.transform.scale(image, (60, 200))
+		self.image = pygame.transform.scale(image, (tile_width, tile_height))
 		self.rect = self.image.get_rect().move(
 			tile_width * pos_x, tile_height * pos_y)
+		self.mask = pygame.mask.from_surface(self.image)
 
 
 class CameraGroup(SpriteGroup):

@@ -35,7 +35,7 @@ class Game:
 	def init_game(self):
 		self.player = Player(load_image('hero_sheet.png'), 6, 2, 300, 400)
 		for i in range(2):
-			self.tree = Decoration(load_image('tree.png'), i * 60, i * 120)
+			self.tree = Decoration(load_image('tree.png'), i * 70, i * 120)
 		self.generate_level()
 	
 	def generate_level(self):
@@ -45,7 +45,7 @@ class Game:
 				if level[y][x] == '.':
 					pass
 				elif level[y][x] == '#':
-					Tile(load_image('wall.png'), x, y)
+					Tile(load_image('wall2.png'), x, y)
 		
 	def run(self):
 		self.fon = pygame.transform.scale(load_image('fon.png'), self.screen_size)
@@ -57,8 +57,6 @@ class Game:
 			all_sprites.get_surface()
 			self.screen.blit(self.fon, (0, 0))
 			all_sprites.custom_draw(self.player)
-			for el in all_sprites:
-				print(el)
 			self.player.input_keys(pygame.key.get_pressed())
 			self.player.update()
 			pygame.display.update()
