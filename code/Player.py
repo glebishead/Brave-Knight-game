@@ -70,6 +70,8 @@ class Player(Sprite):
 					if sprite.rect.bottom - self.speed == self.rect.top and self.direction == 'up':
 						y += self.speed
 						self.direction = None
+						if sprite.rect.bottom == 1150:
+							self.location = 2
 					elif sprite.rect.top + self.speed == self.rect.bottom and self.direction == 'down':
 						y -= self.speed
 						self.direction = None

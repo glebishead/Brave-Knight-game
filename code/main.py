@@ -52,6 +52,8 @@ class Game:
 					Tile(load_image('grass.png'), x, y)
 				elif decorations[y][x] == '@':
 					Object(load_image('home1.png'), x * tile_width, y * tile_height, (120, 200))
+				elif decorations[y][x] == '$':
+					Object(load_image('tavern.png'), x * tile_width, y * tile_height, (120, 200))
 				elif decorations[y][x] == '!':
 					Tile(load_image('grass.png'), x, y)
 					Object(load_image('tree.png'), x * tile_width, y * tile_height, (tile_width, tile_height))
@@ -63,12 +65,21 @@ class Game:
 				if event.type == pygame.QUIT:
 					self.running = False
 			
-			all_sprites.get_surface()
-			hero_group.get_surface()
-			self.screen.blit(self.fon, (0, 0))
-			all_sprites.custom_draw(self.player)
-			self.player.input_keys(pygame.key.get_pressed())
-			self.player.update()
+			if self.player.location == 1:
+				all_sprites.get_surface()
+				hero_group.get_surface()
+				self.screen.blit(self.fon, (0, 0))
+				all_sprites.custom_draw(self.player)
+				self.player.input_keys(pygame.key.get_pressed())
+				self.player.update()
+			elif self.player.location == 2:
+				print(1)
+				# фон поменялся, перемещение работает
+				self.fon = pygame.transform.scale(load_image('wood_boards.png'), self.screen_size)
+				self.screen.blit(self.fon, (0, 0))
+				all_sprites.custom_draw(self.player)
+				self.player.input_keys(pygame.key.get_pressed())
+				self.player.update()
 			self.clock.tick(self.FPS)
 			hero_group.custom_draw(self.player)
 			pygame.display.flip()
