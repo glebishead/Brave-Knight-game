@@ -21,10 +21,10 @@ class Sprite(pygame.sprite.Sprite):
 		pass
 
 
-class Decoration(Sprite):
-	def __init__(self, image, x, y):
-		super().__init__(all_sprites)
-		self.image = image
+class Object(Sprite):
+	def __init__(self, image, x, y, true_size):
+		super().__init__([all_sprites, objects])
+		self.image = pygame.transform.scale(image, true_size)
 		self.rect = self.image.get_rect().move(x, y)
 
 
@@ -42,11 +42,10 @@ tile_width = tile_height = 50
 
 class Tile(Sprite):
 	def __init__(self, image, pos_x, pos_y):
-		super().__init__(all_sprites)
+		super().__init__([tiles, all_sprites])
 		self.image = pygame.transform.scale(image, (tile_width, tile_height))
 		self.rect = self.image.get_rect().move(
 			tile_width * pos_x, tile_height * pos_y)
-		self.mask = pygame.mask.from_surface(self.image)
 
 
 class CameraGroup(SpriteGroup):
@@ -71,5 +70,8 @@ class CameraGroup(SpriteGroup):
 
 sprite_group = SpriteGroup()
 all_sprites = CameraGroup()
+objects = SpriteGroup()
+hero_group = CameraGroup()
+tiles = SpriteGroup()
 btn_bg_group = SpriteGroup()
 trees_group = SpriteGroup()

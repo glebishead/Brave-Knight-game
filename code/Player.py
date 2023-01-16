@@ -1,10 +1,10 @@
 import pygame
-from sprites import Sprite, all_sprites
+from sprites import Sprite, all_sprites, objects, hero_group
 
 
 class Player(Sprite):
 	def __init__(self, sheet, columns, rows, pos_x, pos_y, start_location=1):
-		super().__init__(all_sprites)
+		super().__init__([all_sprites, hero_group])
 		self.frames = []
 		self.cut_sheet(sheet, columns, rows, pos_x, pos_y)
 		self.cur_frame = 0
@@ -65,17 +65,19 @@ class Player(Sprite):
 	def move(self):
 		x, y = self.pos
 		if self.is_moving:
-			for sprite in all_sprites:
+			for sprite in objects:
 				if self.rect.colliderect(sprite) and self != sprite:
-					print(self.rect.topleft, self.rect.bottomright)
-					print(sprite.rect.topleft, sprite.rect.bottomright)
 					if sprite.rect.bottom - self.speed == self.rect.top and self.direction == 'up':
+						y += self.speed
 						self.direction = None
 					elif sprite.rect.top + self.speed == self.rect.bottom and self.direction == 'down':
+						y -= self.speed
 						self.direction = None
 					elif sprite.rect.right - self.speed == self.rect.left and self.direction == 'left':
+						x += self.speed
 						self.direction = None
 					elif sprite.rect.left + self.speed == self.rect.right and self.direction == 'right':
+						x -= self.speed
 						self.direction = None
 			match self.direction:
 				case 'up':

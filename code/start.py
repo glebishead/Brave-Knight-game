@@ -4,7 +4,7 @@ import pygame
 
 from funcs import load_image
 
-screen_size = width, height = (800, 500)
+screen_size = width, height = (1280, 800)
 
 
 def start_screen():

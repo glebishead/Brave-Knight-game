@@ -4,11 +4,14 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c81646a3-776d-47eb-8e37-663ce51227fa" name="Changes" comment="Added some walls and map loading">
+    <list default="true" id="c81646a3-776d-47eb-8e37-663ce51227fa" name="Changes" comment="Changed some graphic and added collision">
+      <change afterPath="$PROJECT_DIR$/data/decorations_map.map" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/code/Player.py" beforeDir="false" afterPath="$PROJECT_DIR$/code/Player.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/code/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/code/main.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/code/sprites.py" beforeDir="false" afterPath="$PROJECT_DIR$/code/sprites.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/code/start.py" beforeDir="false" afterPath="$PROJECT_DIR$/code/start.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/fon.png" beforeDir="false" afterPath="$PROJECT_DIR$/data/fon.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/data/map.map" beforeDir="false" afterPath="$PROJECT_DIR$/data/map.map" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -41,19 +44,19 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;last_opened_file_path&quot;: &quot;D:/1/2/Brave-Knight-game&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.sourceCode.Python&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "last_opened_file_path": "D:/1/2/4 - camera & ysort",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "settings.editor.selected.configurable": "preferences.sourceCode.Python"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
       <recent name="D:\1\2\Brave-Knight-game\data" />
@@ -249,7 +252,9 @@
       <workItem from="1673698916281" duration="2412000" />
       <workItem from="1673701368673" duration="1332000" />
       <workItem from="1673727228359" duration="2840000" />
-      <workItem from="1673794797982" duration="7786000" />
+      <workItem from="1673794797982" duration="7890000" />
+      <workItem from="1673802923377" duration="15000" />
+      <workItem from="1673888457832" duration="5284000" />
     </task>
     <task id="LOCAL-00001" summary="Copied code from lesson. Let's start changes!">
       <created>1673088816083</created>
@@ -363,7 +368,14 @@
       <option name="project" value="LOCAL" />
       <updated>1673732393880</updated>
     </task>
-    <option name="localTasksCounter" value="17" />
+    <task id="LOCAL-00017" summary="Changed some graphic and added collision">
+      <created>1673802725797</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1673802725797</updated>
+    </task>
+    <option name="localTasksCounter" value="18" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -406,10 +418,11 @@
     <MESSAGE value="Added character animation" />
     <MESSAGE value="Fixed character animation again. Lost a lot of files and work X(" />
     <MESSAGE value="Added some walls and map loading" />
-    <option name="LAST_COMMIT_MESSAGE" value="Added some walls and map loading" />
+    <MESSAGE value="Changed some graphic and added collision" />
+    <option name="LAST_COMMIT_MESSAGE" value="Changed some graphic and added collision" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/Brave_Knight_game$main__1_.coverage" NAME="main (1) Coverage Results" MODIFIED="1673802654811" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/code" />
+    <SUITE FILE_PATH="coverage/Brave_Knight_game$main__1_.coverage" NAME="main (1) Coverage Results" MODIFIED="1673894820322" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/code" />
     <SUITE FILE_PATH="coverage/Brave_Knight_game$start.coverage" NAME="start Coverage Results" MODIFIED="1673722786033" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/code/second" />
     <SUITE FILE_PATH="coverage/Brave_Knight_game$main.coverage" NAME="main Coverage Results" MODIFIED="1673089668451" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/py_files" />
     <SUITE FILE_PATH="coverage/Brave_Knight_game$re_main.coverage" NAME="re_main Coverage Results" MODIFIED="1673100786327" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/code" />
