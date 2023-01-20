@@ -25,7 +25,7 @@ class Inventory:  # инвентарь
 
         inventory = cur.execute("""SELECT * FROM inventory""").fetchall()
 
-        self.heal_potion = inventory[0][0]  # кол-во предметов
+        self.heal_potion = inventory[0][0]  # кол-во предметов из бд
         self.beer = inventory[0][1]
         self.bomb = inventory[0][1]
 
@@ -124,7 +124,7 @@ class Player(pygame.sprite.Sprite):  # игрок
 
         stats = cur.execute("""SELECT * FROM stats WHERE name = 'player'""").fetchall()
 
-        self.max_hp = stats[0][1]
+        self.max_hp = stats[0][1]  # статы из бд
         self.cur_hp = stats[0][2]
         self.min_dmg = stats[0][3]
         self.max_dmg = stats[0][4]
@@ -189,7 +189,7 @@ class Enemy(pygame.sprite.Sprite):  # противник
 
         stats = cur.execute(f"""SELECT * FROM stats WHERE name = '{name}'""").fetchall()
 
-        self.max_hp = stats[0][1]
+        self.max_hp = stats[0][1]  # статы из бд в зависимости от имени
         self.cur_hp = stats[0][2]
         self.min_dmg = stats[0][3]
         self.max_dmg = stats[0][4]
