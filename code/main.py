@@ -13,6 +13,9 @@ class Game:
 		pygame.init()
 		self.screen_size = (1280, 800)
 		self.screen = pygame.display.set_mode(self.screen_size)
+		# pygame.mixer.music.load('bg_music.wav')
+		# pygame.mixer.music.play(-1)
+		# pygame.mixer.music.set_volume(2)
 		
 		self.FPS = 50
 		# speed = 1.5
@@ -33,7 +36,7 @@ class Game:
 		pygame.display.set_caption("Brave knight")
 	
 	def init_game(self):
-		self.player = Player(load_image('hero_sheet.png'), 6, 2, 300, 400)
+		self.player = Player(all_sprites, load_image('hero_sheet.png'), 6, 2, 300, 400)
 		self.generate_level()
 	
 	def generate_level(self):
@@ -42,21 +45,22 @@ class Game:
 		for y in range(len(level)):
 			for x in range(len(level[y])):
 				if level[y][x] == '.':
-					Tile(load_image('road.png'), x, y)
+					Tile(load_image('road.png'), tile_width * x, tile_height * y, all_sprites)
 				elif level[y][x] == '#':
-					Object(load_image('wall2.png'), x * tile_width, y * tile_height, (60, 60))
+					Object(load_image('wall2.png'), x * tile_width, y * tile_height, (60, 60), all_sprites)
 		decorations = load_level('decorations_map.map')
 		for y in range(len(decorations)):
 			for x in range(len(decorations[y])):
 				if decorations[y][x] == '.':
-					Tile(load_image('grass.png'), x, y)
+					Tile(load_image('grass.png'), tile_width * x, tile_height * y, all_sprites)
 				elif decorations[y][x] == '@':
-					Object(load_image('home1.png'), x * tile_width, y * tile_height, (120, 200))
+					Object(load_image('home1.png'), x * tile_width, y * tile_height, (120, 200), all_sprites)
 				elif decorations[y][x] == '$':
-					Object(load_image('tavern.png'), x * tile_width, y * tile_height, (120, 200))
+					Object(load_image('tavern.png'), x * tile_width, y * tile_height, (120, 200), all_sprites)
 				elif decorations[y][x] == '!':
-					Tile(load_image('grass.png'), x, y)
-					Object(load_image('tree.png'), x * tile_width, y * tile_height, (tile_width, tile_height))
+					Tile(load_image('grass.png'), tile_width * x, tile_height * y, all_sprites)
+					Object(load_image('tree.png'), x * tile_width, y * tile_height,
+					       (tile_width, tile_height), all_sprites)
 		
 	def run(self):
 		self.fon = pygame.transform.scale(load_image('fon.png'), self.screen_size)
@@ -73,13 +77,10 @@ class Game:
 				self.player.input_keys(pygame.key.get_pressed())
 				self.player.update()
 			elif self.player.location == 2:
-				print(1)
-				# фон поменялся, перемещение работает
-				self.fon = pygame.transform.scale(load_image('wood_boards.png'), self.screen_size)
-				self.screen.blit(self.fon, (0, 0))
-				all_sprites.custom_draw(self.player)
-				self.player.input_keys(pygame.key.get_pressed())
-				self.player.update()
+				from in_tavern import tavern_screen
+				pos = self.player.pos
+				tavern_screen(self.player, self.clock, self.FPS)
+				self.player.pos = pos
 			self.clock.tick(self.FPS)
 			hero_group.custom_draw(self.player)
 			pygame.display.flip()

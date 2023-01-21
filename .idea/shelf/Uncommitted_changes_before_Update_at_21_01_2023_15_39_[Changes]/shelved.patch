@@ -1,0 +1,438 @@
+Index: data/decorations_map.map
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>############################################################\r\n############################################################\r\n##........................................................##\r\n##........22@222...........22@222.......!.......22@222....##\r\n##..!.....222222.....!.....222222...............222222....##\r\n##........222222...........222222222222222222222222222....##\r\n##........22222222222222222222222...............222222....##\r\n##........222222...........222222...............222222....##\r\n##.............2................2................2........##\r\n##.....!.......2................2........!.......2........##\r\n##.............2.........!......2................2........##\r\n##.............2................2................2........##\r\n##.............2................2................2........##\r\n##...!....22@222..............22@222.........22@222.......##\r\n##........222222..............222222.........222222.......##\r\n##........22222222222222222222222222.........222222.......##\r\n##........222222........2.....222222.........222222.......##\r\n##........222222........2.....222222.........222222.......##\r\n##.....!...2............2.....222222222222222222222.......##\r\n##.........2.........22$222.............2.................##\r\n##.........2.........222222.............2............!....##\r\n##.........2.........222222.............2.................##\r\n##.........222@22....222222.....22@222..2.......22@222....##\r\n##.........222222222222222222222222222..2.......222222....##\r\n##....!.....22222...............2222222222222222222222....##\r\n##..........22222...............222222..........222222....##\r\n##..........22222...............222222..........222222....##\r\n##............2..................2........!.........2.....##\r\n##......!.....2..................2..................2.....##\r\n##.........22@222.........22@22222..............22@222....##\r\n##.........222222.........222222................222222....##\r\n##.........2222222222222222222222222222222222222222222....##\r\n##.........222222.........222222................222222....##\r\n##........................................................##\r\n##.....!.............!..................!............!....##\r\n##........................................................##\r\n############################################################\r\n############################################################
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/data/decorations_map.map b/data/decorations_map.map
+--- a/data/decorations_map.map	(revision ed02ad9c94421cf2da7ffbf2800a70ca2d43863f)
++++ b/data/decorations_map.map	(date 1673971778956)
+@@ -13,8 +13,8 @@
+ ##.............2................2................2........##
+ ##...!....22@222..............22@222.........22@222.......##
+ ##........222222..............222222.........222222.......##
+-##........22222222222222222222222222.........222222.......##
+-##........222222........2.....222222.........222222.......##
++##........22222222222222222222222222.........222222222222222
++##........222222........2.....222222.........222222222222222
+ ##........222222........2.....222222.........222222.......##
+ ##.....!...2............2.....222222222222222222222.......##
+ ##.........2.........22$222.............2.................##
+@@ -31,7 +31,7 @@
+ ##.........222222.........222222................222222....##
+ ##.........2222222222222222222222222222222222222222222....##
+ ##.........222222.........222222................222222....##
+-##........................................................##
++##.........222222.........222222................222222....##
+ ##.....!.............!..................!............!....##
+ ##........................................................##
+ ############################################################
+Index: code/Player.py
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>import pygame\r\nfrom sprites import Sprite, all_sprites, objects, hero_group\r\n\r\n\r\nclass Player(Sprite):\r\n\tdef __init__(self, sheet, columns, rows, pos_x, pos_y, start_location=1):\r\n\t\tsuper().__init__([all_sprites, hero_group])\r\n\t\tself.frames = []\r\n\t\tself.cut_sheet(sheet, columns, rows, pos_x, pos_y)\r\n\t\tself.cur_frame = 0\r\n\t\tself.image = self.frames[self.cur_frame]\r\n\t\tself.t = pygame.time.get_ticks()\r\n\t\tself.pos = (pos_x, pos_y)\r\n\t\tself.mask = pygame.mask.from_surface(self.image)\r\n\t\tself.speed = 5\r\n\t\tself.is_moving = False\r\n\t\tself.direction = None\r\n\t\tself.flag_le = False\r\n\t\tself.location = start_location\r\n\t\r\n\tdef cut_sheet(self, sheet, columns, rows, x, y):\r\n\t\tself.rect = pygame.Rect(-10, -100, sheet.get_width() // columns,\r\n\t\t                        sheet.get_height() // rows)\r\n\t\tfor j in range(rows):\r\n\t\t\tfor i in range(columns):\r\n\t\t\t\tframe_location = (self.rect.w * i, self.rect.h * j)\r\n\t\t\t\tself.frames.append(pygame.transform.scale(sheet.subsurface(pygame.Rect(\r\n\t\t\t\t\tframe_location, self.rect.size)), (30, 30)))\r\n\t\r\n\tdef update(self):\r\n\t\tif self.is_moving:\r\n\t\t\tif self.direction is not None:\r\n\t\t\t\tself.cur_frame = self.cur_frame + 0.25\r\n\t\t\tif self.cur_frame > 11:\r\n\t\t\t\tself.cur_frame = 3\r\n\t\t\tif self.cur_frame == 3:\r\n\t\t\t\tself.cur_frame += 2\r\n\t\t\tself.image = self.frames[int(self.cur_frame)]\r\n\t\t\tif self.flag_le:\r\n\t\t\t\tself.image = pygame.transform.flip(self.image, True, False)\r\n\t\telse:\r\n\t\t\tself.image = self.frames[0]\r\n\t\t\tif self.flag_le:\r\n\t\t\t\tself.image = pygame.transform.flip(self.image, True, False)\r\n\t\tself.t = pygame.time.get_ticks()\r\n\t\tself.move()\r\n\t\r\n\tdef input_keys(self, keys):\r\n\t\tif keys[pygame.K_UP] or keys[pygame.K_w]:\r\n\t\t\tself.direction = 'up'\r\n\t\t\tself.is_moving = True\r\n\t\telif keys[pygame.K_DOWN] or keys[pygame.K_s]:\r\n\t\t\tself.direction = 'down'\r\n\t\t\tself.is_moving = True\r\n\t\t\r\n\t\tif keys[pygame.K_LEFT] or keys[pygame.K_a]:\r\n\t\t\tself.direction = 'left'\r\n\t\t\tself.is_moving = True\r\n\t\t\tself.flag_le = True\r\n\t\telif keys[pygame.K_RIGHT] or keys[pygame.K_d]:\r\n\t\t\tself.direction = 'right'\r\n\t\t\tself.is_moving = True\r\n\t\t\tself.flag_le = False\r\n\t\r\n\tdef move(self):\r\n\t\tx, y = self.pos\r\n\t\tif self.is_moving:\r\n\t\t\tfor sprite in objects:\r\n\t\t\t\tif self.rect.colliderect(sprite) and self != sprite:\r\n\t\t\t\t\tif sprite.rect.bottom - self.speed == self.rect.top and self.direction == 'up':\r\n\t\t\t\t\t\ty += self.speed\r\n\t\t\t\t\t\tself.direction = None\r\n\t\t\t\t\t\tif sprite.rect.bottom == 1150:\r\n\t\t\t\t\t\t\tself.location = 2\r\n\t\t\t\t\telif sprite.rect.top + self.speed == self.rect.bottom and self.direction == 'down':\r\n\t\t\t\t\t\ty -= self.speed\r\n\t\t\t\t\t\tself.direction = None\r\n\t\t\t\t\telif sprite.rect.right - self.speed == self.rect.left and self.direction == 'left':\r\n\t\t\t\t\t\tx += self.speed\r\n\t\t\t\t\t\tself.direction = None\r\n\t\t\t\t\telif sprite.rect.left + self.speed == self.rect.right and self.direction == 'right':\r\n\t\t\t\t\t\tx -= self.speed\r\n\t\t\t\t\t\tself.direction = None\r\n\t\t\tmatch self.direction:\r\n\t\t\t\tcase 'up':\r\n\t\t\t\t\ty -= self.speed\r\n\t\t\t\tcase 'down':\r\n\t\t\t\t\ty += self.speed\r\n\t\t\t\tcase 'left':\r\n\t\t\t\t\tx -= self.speed\r\n\t\t\t\tcase 'right':\r\n\t\t\t\t\tx += self.speed\r\n\t\tself.is_moving = False\r\n\t\tself.pos = x, y\r\n\t\tself.rect = self.image.get_rect().move(self.pos)\r\n\t\t
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/code/Player.py b/code/Player.py
+--- a/code/Player.py	(revision ed02ad9c94421cf2da7ffbf2800a70ca2d43863f)
++++ b/code/Player.py	(date 1674308150088)
+@@ -1,17 +1,15 @@
+ import pygame
+-from sprites import Sprite, all_sprites, objects, hero_group
++from sprites import Sprite, objects, hero_group
+ 
+ 
+ class Player(Sprite):
+-	def __init__(self, sheet, columns, rows, pos_x, pos_y, start_location=1):
+-		super().__init__([all_sprites, hero_group])
++	def __init__(self, group, sheet, columns, rows, pos_x, pos_y, start_location=1):
++		super().__init__([group, hero_group])
+ 		self.frames = []
+ 		self.cut_sheet(sheet, columns, rows, pos_x, pos_y)
+ 		self.cur_frame = 0
+ 		self.image = self.frames[self.cur_frame]
+-		self.t = pygame.time.get_ticks()
+ 		self.pos = (pos_x, pos_y)
+-		self.mask = pygame.mask.from_surface(self.image)
+ 		self.speed = 5
+ 		self.is_moving = False
+ 		self.direction = None
+Index: code/main.py
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>import sys\r\nimport pygame\r\nimport os\r\n\r\nfrom funcs import load_image, load_level\r\nfrom sprites import all_sprites, Object, Tile, hero_group\r\nfrom Player import Player\r\nfrom start import start_screen\r\n\r\n\r\nclass Game:\r\n\tdef __init__(self):\r\n\t\tpygame.init()\r\n\t\tself.screen_size = (1280, 800)\r\n\t\tself.screen = pygame.display.set_mode(self.screen_size)\r\n\t\t\r\n\t\tself.FPS = 50\r\n\t\t# speed = 1.5\r\n\t\tself.speed = 4\r\n\t\t\r\n\t\tself.init_ui()\r\n\t\tself.init_game()\r\n\r\n\t\tself.running = True\r\n\t\tself.clock = pygame.time.Clock()\r\n\r\n\t\tstart_screen()\r\n\t\r\n\tdef init_ui(self):\r\n\t\ticon = load_image('icon.png')\r\n\t\tpygame.display.set_icon(icon)\r\n\t\t\r\n\t\tpygame.display.set_caption(\"Brave knight\")\r\n\t\r\n\tdef init_game(self):\r\n\t\tself.player = Player(load_image('hero_sheet.png'), 6, 2, 300, 400)\r\n\t\tself.generate_level()\r\n\t\r\n\tdef generate_level(self):\r\n\t\tlevel = load_level('map.map')\r\n\t\tfrom sprites import tile_width, tile_height\r\n\t\tfor y in range(len(level)):\r\n\t\t\tfor x in range(len(level[y])):\r\n\t\t\t\tif level[y][x] == '.':\r\n\t\t\t\t\tTile(load_image('road.png'), x, y)\r\n\t\t\t\telif level[y][x] == '#':\r\n\t\t\t\t\tObject(load_image('wall2.png'), x * tile_width, y * tile_height, (60, 60))\r\n\t\tdecorations = load_level('decorations_map.map')\r\n\t\tfor y in range(len(decorations)):\r\n\t\t\tfor x in range(len(decorations[y])):\r\n\t\t\t\tif decorations[y][x] == '.':\r\n\t\t\t\t\tTile(load_image('grass.png'), x, y)\r\n\t\t\t\telif decorations[y][x] == '@':\r\n\t\t\t\t\tObject(load_image('home1.png'), x * tile_width, y * tile_height, (120, 200))\r\n\t\t\t\telif decorations[y][x] == '$':\r\n\t\t\t\t\tObject(load_image('tavern.png'), x * tile_width, y * tile_height, (120, 200))\r\n\t\t\t\telif decorations[y][x] == '!':\r\n\t\t\t\t\tTile(load_image('grass.png'), x, y)\r\n\t\t\t\t\tObject(load_image('tree.png'), x * tile_width, y * tile_height, (tile_width, tile_height))\r\n\t\t\r\n\tdef run(self):\r\n\t\tself.fon = pygame.transform.scale(load_image('fon.png'), self.screen_size)\r\n\t\twhile self.running:\r\n\t\t\tfor event in pygame.event.get():\r\n\t\t\t\tif event.type == pygame.QUIT:\r\n\t\t\t\t\tself.running = False\r\n\t\t\t\r\n\t\t\tif self.player.location == 1:\r\n\t\t\t\tall_sprites.get_surface()\r\n\t\t\t\thero_group.get_surface()\r\n\t\t\t\tself.screen.blit(self.fon, (0, 0))\r\n\t\t\t\tall_sprites.custom_draw(self.player)\r\n\t\t\t\tself.player.input_keys(pygame.key.get_pressed())\r\n\t\t\t\tself.player.update()\r\n\t\t\telif self.player.location == 2:\r\n\t\t\t\tprint(1)\r\n\t\t\t\t# фон поменялся, перемещение работает\r\n\t\t\t\tself.fon = pygame.transform.scale(load_image('wood_boards.png'), self.screen_size)\r\n\t\t\t\tself.screen.blit(self.fon, (0, 0))\r\n\t\t\t\tall_sprites.custom_draw(self.player)\r\n\t\t\t\tself.player.input_keys(pygame.key.get_pressed())\r\n\t\t\t\tself.player.update()\r\n\t\t\tself.clock.tick(self.FPS)\r\n\t\t\thero_group.custom_draw(self.player)\r\n\t\t\tpygame.display.flip()\r\n\t\tpygame.quit()\r\n\t\tsys.exit()\r\n\r\n\r\nif __name__ == '__main__':\r\n\tgame = Game()\r\n\tgame.run()
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/code/main.py b/code/main.py
+--- a/code/main.py	(revision ed02ad9c94421cf2da7ffbf2800a70ca2d43863f)
++++ b/code/main.py	(date 1674308150081)
+@@ -13,6 +13,9 @@
+ 		pygame.init()
+ 		self.screen_size = (1280, 800)
+ 		self.screen = pygame.display.set_mode(self.screen_size)
++		# pygame.mixer.music.load('bg_music.wav')
++		# pygame.mixer.music.play(-1)
++		# pygame.mixer.music.set_volume(2)
+ 		
+ 		self.FPS = 50
+ 		# speed = 1.5
+@@ -33,7 +36,7 @@
+ 		pygame.display.set_caption("Brave knight")
+ 	
+ 	def init_game(self):
+-		self.player = Player(load_image('hero_sheet.png'), 6, 2, 300, 400)
++		self.player = Player(all_sprites, load_image('hero_sheet.png'), 6, 2, 300, 400)
+ 		self.generate_level()
+ 	
+ 	def generate_level(self):
+@@ -42,21 +45,22 @@
+ 		for y in range(len(level)):
+ 			for x in range(len(level[y])):
+ 				if level[y][x] == '.':
+-					Tile(load_image('road.png'), x, y)
++					Tile(load_image('road.png'), x, y, all_sprites)
+ 				elif level[y][x] == '#':
+-					Object(load_image('wall2.png'), x * tile_width, y * tile_height, (60, 60))
++					Object(load_image('wall2.png'), x * tile_width, y * tile_height, (60, 60), all_sprites)
+ 		decorations = load_level('decorations_map.map')
+ 		for y in range(len(decorations)):
+ 			for x in range(len(decorations[y])):
+ 				if decorations[y][x] == '.':
+-					Tile(load_image('grass.png'), x, y)
++					Tile(load_image('grass.png'), x, y, all_sprites)
+ 				elif decorations[y][x] == '@':
+-					Object(load_image('home1.png'), x * tile_width, y * tile_height, (120, 200))
++					Object(load_image('home1.png'), x * tile_width, y * tile_height, (120, 200), all_sprites)
+ 				elif decorations[y][x] == '$':
+-					Object(load_image('tavern.png'), x * tile_width, y * tile_height, (120, 200))
++					Object(load_image('tavern.png'), x * tile_width, y * tile_height, (120, 200), all_sprites)
+ 				elif decorations[y][x] == '!':
+-					Tile(load_image('grass.png'), x, y)
+-					Object(load_image('tree.png'), x * tile_width, y * tile_height, (tile_width, tile_height))
++					Tile(load_image('grass.png'), x, y, all_sprites)
++					Object(load_image('tree.png'), x * tile_width, y * tile_height,
++					       (tile_width, tile_height), all_sprites)
+ 		
+ 	def run(self):
+ 		self.fon = pygame.transform.scale(load_image('fon.png'), self.screen_size)
+@@ -73,13 +77,8 @@
+ 				self.player.input_keys(pygame.key.get_pressed())
+ 				self.player.update()
+ 			elif self.player.location == 2:
+-				print(1)
+-				# фон поменялся, перемещение работает
+-				self.fon = pygame.transform.scale(load_image('wood_boards.png'), self.screen_size)
+-				self.screen.blit(self.fon, (0, 0))
+-				all_sprites.custom_draw(self.player)
+-				self.player.input_keys(pygame.key.get_pressed())
+-				self.player.update()
++				from in_tavern import tavern_screen
++				tavern_screen(self.screen, self.clock, self.FPS)
+ 			self.clock.tick(self.FPS)
+ 			hero_group.custom_draw(self.player)
+ 			pygame.display.flip()
+Index: code/sprites.py
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>import pygame\r\n\r\nfrom funcs import load_image\r\n\r\n\r\nclass SpriteGroup(pygame.sprite.Group):\r\n\tdef __init__(self):\r\n\t\tsuper().__init__()\r\n\t\r\n\tdef get_event(self, event):\r\n\t\tfor sprite in self:\r\n\t\t\tsprite.get_event(event)\r\n\r\n\r\nclass Sprite(pygame.sprite.Sprite):\r\n\tdef __init__(self, group):\r\n\t\tsuper().__init__(group)\r\n\t\tself.rect = None\r\n\t\r\n\tdef get_event(self, event):\r\n\t\tpass\r\n\r\n\r\nclass Object(Sprite):\r\n\tdef __init__(self, image, x, y, true_size):\r\n\t\tsuper().__init__([all_sprites, objects])\r\n\t\tself.image = pygame.transform.scale(image, true_size)\r\n\t\tself.rect = self.image.get_rect().move(x, y)\r\n\r\n\r\nclass Background(Sprite):\r\n\tdef __init__(self, w, h, x, y):\r\n\t\tsuper().__init__(btn_bg_group)\r\n\t\tself.image = load_image('bg_button.png')\r\n\t\tself.image = pygame.transform.scale(self.image, (w // 3 - 10, h // 10 - 5))\r\n\t\tself.rect = self.image.get_rect().move(\r\n\t\t\tx, y)\r\n\r\n\r\ntile_width = tile_height = 50\r\n\r\n\r\nclass Tile(Sprite):\r\n\tdef __init__(self, image, pos_x, pos_y):\r\n\t\tsuper().__init__([tiles, all_sprites])\r\n\t\tself.image = pygame.transform.scale(image, (tile_width, tile_height))\r\n\t\tself.rect = self.image.get_rect().move(\r\n\t\t\ttile_width * pos_x, tile_height * pos_y)\r\n\r\n\r\nclass CameraGroup(SpriteGroup):\r\n\tdef __init__(self):\r\n\t\tsuper().__init__()\r\n\t\tself.display_surface = pygame.display.get_surface()\r\n\t\tself.offset = pygame.math.Vector2()\r\n\t\r\n\tdef get_surface(self):\r\n\t\tself.display_surface = pygame.display.get_surface()\r\n\t\tself.half_width = self.display_surface.get_size()[0] // 2\r\n\t\tself.half_height = self.display_surface.get_size()[1] // 2\r\n\r\n\tdef custom_draw(self, player):\r\n\t\tself.offset.x = player.rect.centerx - self.half_width\r\n\t\tself.offset.y = player.rect.centery - self.half_height\r\n\r\n\t\tfor sprite in self.sprites():\r\n\t\t\toffset_pos = sprite.rect.topleft - self.offset\r\n\t\t\tself.display_surface.blit(sprite.image, offset_pos)\r\n\r\n\r\nsprite_group = SpriteGroup()\r\nall_sprites = CameraGroup()\r\nobjects = SpriteGroup()\r\nhero_group = CameraGroup()\r\ntiles = SpriteGroup()\r\nbtn_bg_group = SpriteGroup()\r\ntrees_group = SpriteGroup()\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/code/sprites.py b/code/sprites.py
+--- a/code/sprites.py	(revision ed02ad9c94421cf2da7ffbf2800a70ca2d43863f)
++++ b/code/sprites.py	(date 1674308150075)
+@@ -22,8 +22,8 @@
+ 
+ 
+ class Object(Sprite):
+-	def __init__(self, image, x, y, true_size):
+-		super().__init__([all_sprites, objects])
++	def __init__(self, image, x, y, true_size, group):
++		super().__init__([group, objects])
+ 		self.image = pygame.transform.scale(image, true_size)
+ 		self.rect = self.image.get_rect().move(x, y)
+ 
+@@ -41,8 +41,8 @@
+ 
+ 
+ class Tile(Sprite):
+-	def __init__(self, image, pos_x, pos_y):
+-		super().__init__([tiles, all_sprites])
++	def __init__(self, image, pos_x, pos_y, group):
++		super().__init__([tiles, group])
+ 		self.image = pygame.transform.scale(image, (tile_width, tile_height))
+ 		self.rect = self.image.get_rect().move(
+ 			tile_width * pos_x, tile_height * pos_y)
+@@ -70,6 +70,7 @@
+ 
+ sprite_group = SpriteGroup()
+ all_sprites = CameraGroup()
++tavern_sprites = CameraGroup()
+ objects = SpriteGroup()
+ hero_group = CameraGroup()
+ tiles = SpriteGroup()
+Index: data/map.map
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>############################################################\r\n############################################################\r\n##........................................................##\r\n##........................................................##\r\n##........................................................##\r\n##........................................................##\r\n##........................................................##\r\n##........................................................##\r\n##........................................................##\r\n##........................................................##\r\n##........................................................##\r\n##........................................................##\r\n##........................................................##\r\n##........................................................##\r\n##........................................................##\r\n##........................................................##\r\n##........................................................##\r\n##........................................................##\r\n##........................................................##\r\n##........................................................##\r\n##........................................................##\r\n##........................................................##\r\n##........................................................##\r\n##........................................................##\r\n##........................................................##\r\n##........................................................##\r\n##........................................................##\r\n##........................................................##\r\n##........................................................##\r\n##........................................................##\r\n##........................................................##\r\n##........................................................##\r\n##........................................................##\r\n##........................................................##\r\n##........................................................##\r\n##........................................................##\r\n############################################################\r\n############################################################
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/data/map.map b/data/map.map
+--- a/data/map.map	(revision ed02ad9c94421cf2da7ffbf2800a70ca2d43863f)
++++ b/data/map.map	(date 1673971841917)
+@@ -1,38 +1,38 @@
+-############################################################
+-############################################################
+-##........................................................##
+-##........................................................##
+-##........................................................##
+-##........................................................##
+-##........................................................##
+-##........................................................##
+-##........................................................##
+-##........................................................##
+-##........................................................##
+-##........................................................##
+-##........................................................##
+-##........................................................##
+-##........................................................##
+-##........................................................##
+-##........................................................##
+-##........................................................##
+-##........................................................##
+-##........................................................##
+-##........................................................##
+-##........................................................##
+-##........................................................##
+-##........................................................##
+-##........................................................##
+-##........................................................##
+-##........................................................##
+-##........................................................##
+-##........................................................##
+-##........................................................##
+-##........................................................##
+-##........................................................##
+-##........................................................##
+-##........................................................##
+-##........................................................##
+-##........................................................##
+-############################################################
+-############################################################
+\ No newline at end of file
++############################################################222222222222
++############################################################222222222222
++##........................................................##222222222222
++##........................................................##222222222222
++##........................................................##222222222222
++##........................................................##222222222222
++##........................................................##222222222222
++##........................................................##222222222222
++##........................................................##222222222222
++##........................................................##222222222222
++##........................................................##222222222222
++##........................................................##222222222222
++##........................................................##222222222222
++##........................................................##222222222222
++##........................................................##222222222222
++##......................................................................
++##......................................................................
++##........................................................##222222222222
++##........................................................##222222222222
++##........................................................##222222222222
++##........................................................##222222222222
++##........................................................##222222222222
++##........................................................##222222222222
++##........................................................##222222222222
++##........................................................##222222222222
++##........................................................##222222222222
++##........................................................##222222222222
++##........................................................##222222222222
++##........................................................##222222222222
++##........................................................##222222222222
++##........................................................##222222222222
++##........................................................##222222222222
++##........................................................##222222222222
++##........................................................##222222222222
++##........................................................##222222222222
++##........................................................##222222222222
++############################################################222222222222
++############################################################222222222222
+\ No newline at end of file
+Index: data/tavern.map
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/data/tavern.map b/data/tavern.map
+new file mode 100644
+--- /dev/null	(date 1674306427913)
++++ b/data/tavern.map	(date 1674306427913)
+@@ -0,0 +1,10 @@
++############
++#..........#
++#..........#
++#..........#
++#..........#
++#..........#
++#..........#
++#..........#
++#..........#
++############
+\ No newline at end of file
+Index: .idea/workspace.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<project version=\"4\">\r\n  <component name=\"AutoImportSettings\">\r\n    <option name=\"autoReloadType\" value=\"SELECTIVE\" />\r\n  </component>\r\n  <component name=\"ChangeListManager\">\r\n    <list default=\"true\" id=\"c81646a3-776d-47eb-8e37-663ce51227fa\" name=\"Changes\" comment=\"Added decorations and tiles\">\r\n      <change beforePath=\"$PROJECT_DIR$/.idea/workspace.xml\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/.idea/workspace.xml\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/code/Player.py\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/code/Player.py\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/code/main.py\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/code/main.py\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/data/decorations_map.map\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/data/decorations_map.map\" afterDir=\"false\" />\r\n    </list>\r\n    <option name=\"SHOW_DIALOG\" value=\"false\" />\r\n    <option name=\"HIGHLIGHT_CONFLICTS\" value=\"true\" />\r\n    <option name=\"HIGHLIGHT_NON_ACTIVE_CHANGELIST\" value=\"false\" />\r\n    <option name=\"LAST_RESOLUTION\" value=\"IGNORE\" />\r\n  </component>\r\n  <component name=\"FileTemplateManagerImpl\">\r\n    <option name=\"RECENT_TEMPLATES\">\r\n      <list>\r\n        <option value=\"Python Script\" />\r\n      </list>\r\n    </option>\r\n  </component>\r\n  <component name=\"Git.Settings\">\r\n    <option name=\"RECENT_BRANCH_BY_REPOSITORY\">\r\n      <map>\r\n        <entry key=\"$PROJECT_DIR$\" value=\"7554db2ff7dd52a02c623a11f6220c190dd9a731\" />\r\n      </map>\r\n    </option>\r\n    <option name=\"RECENT_GIT_ROOT_PATH\" value=\"$PROJECT_DIR$\" />\r\n    <option name=\"RESET_MODE\" value=\"SOFT\" />\r\n    <option name=\"WARN_ABOUT_DETACHED_HEAD\" value=\"false\" />\r\n  </component>\r\n  <component name=\"MarkdownSettingsMigration\">\r\n    <option name=\"stateVersion\" value=\"1\" />\r\n  </component>\r\n  <component name=\"ProjectId\" id=\"2Jzh5yTQnEbDBdOf8Yy20Rz4DVU\" />\r\n  <component name=\"ProjectViewState\">\r\n    <option name=\"hideEmptyMiddlePackages\" value=\"true\" />\r\n    <option name=\"showLibraryContents\" value=\"true\" />\r\n  </component>\r\n  <component name=\"PropertiesComponent\"><![CDATA[{\r\n  \"keyToString\": {\r\n    \"RunOnceActivity.OpenProjectViewOnStart\": \"true\",\r\n    \"RunOnceActivity.ShowReadmeOnStart\": \"true\",\r\n    \"WebServerToolWindowFactoryState\": \"false\",\r\n    \"last_opened_file_path\": \"D:/1/2/4 - camera & ysort\",\r\n    \"node.js.detected.package.eslint\": \"true\",\r\n    \"node.js.detected.package.tslint\": \"true\",\r\n    \"node.js.selected.package.eslint\": \"(autodetect)\",\r\n    \"node.js.selected.package.tslint\": \"(autodetect)\",\r\n    \"settings.editor.selected.configurable\": \"preferences.sourceCode.Python\"\r\n  }\r\n}]]></component>\r\n  <component name=\"RecentsManager\">\r\n    <key name=\"MoveFile.RECENT_KEYS\">\r\n      <recent name=\"D:\\1\\2\\Brave-Knight-game\\data\" />\r\n      <recent name=\"D:\\1\\2\\Brave-Knight-game\\code\" />\r\n      <recent name=\"D:\\1\\2\\Brave-Knight-game\" />\r\n      <recent name=\"D:\\1\\2\\Brave-Knight-game\\py_files\" />\r\n    </key>\r\n  </component>\r\n  <component name=\"RunManager\" selected=\"Python.main (1)\">\r\n    <configuration name=\"main (1)\" type=\"PythonConfigurationType\" factoryName=\"Python\" temporary=\"true\" nameIsGenerated=\"true\">\r\n      <module name=\"Brave-Knight-game\" />\r\n      <option name=\"INTERPRETER_OPTIONS\" value=\"\" />\r\n      <option name=\"PARENT_ENVS\" value=\"true\" />\r\n      <envs>\r\n        <env name=\"PYTHONUNBUFFERED\" value=\"1\" />\r\n      </envs>\r\n      <option name=\"SDK_HOME\" value=\"\" />\r\n      <option name=\"WORKING_DIRECTORY\" value=\"$PROJECT_DIR$/code\" />\r\n      <option name=\"IS_MODULE_SDK\" value=\"true\" />\r\n      <option name=\"ADD_CONTENT_ROOTS\" value=\"true\" />\r\n      <option name=\"ADD_SOURCE_ROOTS\" value=\"true\" />\r\n      <EXTENSION ID=\"PythonCoverageRunConfigurationExtension\" runner=\"coverage.py\" />\r\n      <option name=\"SCRIPT_NAME\" value=\"$PROJECT_DIR$/code/main.py\" />\r\n      <option name=\"PARAMETERS\" value=\"\" />\r\n      <option name=\"SHOW_COMMAND_LINE\" value=\"false\" />\r\n      <option name=\"EMULATE_TERMINAL\" value=\"false\" />\r\n      <option name=\"MODULE_MODE\" value=\"false\" />\r\n      <option name=\"REDIRECT_INPUT\" value=\"false\" />\r\n      <option name=\"INPUT_FILE\" value=\"\" />\r\n      <method v=\"2\" />\r\n    </configuration>\r\n    <configuration name=\"main\" type=\"PythonConfigurationType\" factoryName=\"Python\" temporary=\"true\" nameIsGenerated=\"true\">\r\n      <module name=\"Brave-Knight-game\" />\r\n      <option name=\"INTERPRETER_OPTIONS\" value=\"\" />\r\n      <option name=\"PARENT_ENVS\" value=\"true\" />\r\n      <envs>\r\n        <env name=\"PYTHONUNBUFFERED\" value=\"1\" />\r\n      </envs>\r\n      <option name=\"SDK_HOME\" value=\"\" />\r\n      <option name=\"WORKING_DIRECTORY\" value=\"$PROJECT_DIR$\" />\r\n      <option name=\"IS_MODULE_SDK\" value=\"true\" />\r\n      <option name=\"ADD_CONTENT_ROOTS\" value=\"true\" />\r\n      <option name=\"ADD_SOURCE_ROOTS\" value=\"true\" />\r\n      <EXTENSION ID=\"PythonCoverageRunConfigurationExtension\" runner=\"coverage.py\" />\r\n      <option name=\"SCRIPT_NAME\" value=\"D:\\1\\2\\Brave-Knight-game\\code\\main.py\" />\r\n      <option name=\"PARAMETERS\" value=\"\" />\r\n      <option name=\"SHOW_COMMAND_LINE\" value=\"false\" />\r\n      <option name=\"EMULATE_TERMINAL\" value=\"false\" />\r\n      <option name=\"MODULE_MODE\" value=\"false\" />\r\n      <option name=\"REDIRECT_INPUT\" value=\"false\" />\r\n      <option name=\"INPUT_FILE\" value=\"\" />\r\n      <method v=\"2\" />\r\n    </configuration>\r\n    <configuration name=\"main\" type=\"PythonConfigurationType\" factoryName=\"Python\" temporary=\"true\" nameIsGenerated=\"true\">\r\n      <module name=\"Brave-Knight-game\" />\r\n      <option name=\"INTERPRETER_OPTIONS\" value=\"\" />\r\n      <option name=\"PARENT_ENVS\" value=\"true\" />\r\n      <envs>\r\n        <env name=\"PYTHONUNBUFFERED\" value=\"1\" />\r\n      </envs>\r\n      <option name=\"SDK_HOME\" value=\"\" />\r\n      <option name=\"WORKING_DIRECTORY\" value=\"$PROJECT_DIR$/code\" />\r\n      <option name=\"IS_MODULE_SDK\" value=\"true\" />\r\n      <option name=\"ADD_CONTENT_ROOTS\" value=\"true\" />\r\n      <option name=\"ADD_SOURCE_ROOTS\" value=\"true\" />\r\n      <EXTENSION ID=\"PythonCoverageRunConfigurationExtension\" runner=\"coverage.py\" />\r\n      <option name=\"SCRIPT_NAME\" value=\"D:\\1\\2\\Brave-Knight-game\\main.py\" />\r\n      <option name=\"PARAMETERS\" value=\"\" />\r\n      <option name=\"SHOW_COMMAND_LINE\" value=\"false\" />\r\n      <option name=\"EMULATE_TERMINAL\" value=\"false\" />\r\n      <option name=\"MODULE_MODE\" value=\"false\" />\r\n      <option name=\"REDIRECT_INPUT\" value=\"false\" />\r\n      <option name=\"INPUT_FILE\" value=\"\" />\r\n      <method v=\"2\" />\r\n    </configuration>\r\n    <configuration name=\"main\" type=\"PythonConfigurationType\" factoryName=\"Python\" temporary=\"true\" nameIsGenerated=\"true\">\r\n      <module name=\"Brave-Knight-game\" />\r\n      <option name=\"INTERPRETER_OPTIONS\" value=\"\" />\r\n      <option name=\"PARENT_ENVS\" value=\"true\" />\r\n      <envs>\r\n        <env name=\"PYTHONUNBUFFERED\" value=\"1\" />\r\n      </envs>\r\n      <option name=\"SDK_HOME\" value=\"\" />\r\n      <option name=\"WORKING_DIRECTORY\" value=\"$PROJECT_DIR$\" />\r\n      <option name=\"IS_MODULE_SDK\" value=\"true\" />\r\n      <option name=\"ADD_CONTENT_ROOTS\" value=\"true\" />\r\n      <option name=\"ADD_SOURCE_ROOTS\" value=\"true\" />\r\n      <EXTENSION ID=\"PythonCoverageRunConfigurationExtension\" runner=\"coverage.py\" />\r\n      <option name=\"SCRIPT_NAME\" value=\"D:\\1\\2\\Brave-Knight-game\\code\\main.py\" />\r\n      <option name=\"PARAMETERS\" value=\"\" />\r\n      <option name=\"SHOW_COMMAND_LINE\" value=\"false\" />\r\n      <option name=\"EMULATE_TERMINAL\" value=\"false\" />\r\n      <option name=\"MODULE_MODE\" value=\"false\" />\r\n      <option name=\"REDIRECT_INPUT\" value=\"false\" />\r\n      <option name=\"INPUT_FILE\" value=\"\" />\r\n      <method v=\"2\" />\r\n    </configuration>\r\n    <configuration name=\"main\" type=\"PythonConfigurationType\" factoryName=\"Python\" temporary=\"true\" nameIsGenerated=\"true\">\r\n      <module name=\"Brave-Knight-game\" />\r\n      <option name=\"INTERPRETER_OPTIONS\" value=\"\" />\r\n      <option name=\"PARENT_ENVS\" value=\"true\" />\r\n      <envs>\r\n        <env name=\"PYTHONUNBUFFERED\" value=\"1\" />\r\n      </envs>\r\n      <option name=\"SDK_HOME\" value=\"\" />\r\n      <option name=\"WORKING_DIRECTORY\" value=\"$PROJECT_DIR$\" />\r\n      <option name=\"IS_MODULE_SDK\" value=\"true\" />\r\n      <option name=\"ADD_CONTENT_ROOTS\" value=\"true\" />\r\n      <option name=\"ADD_SOURCE_ROOTS\" value=\"true\" />\r\n      <EXTENSION ID=\"PythonCoverageRunConfigurationExtension\" runner=\"coverage.py\" />\r\n      <option name=\"SCRIPT_NAME\" value=\"D:\\1\\2\\Brave-Knight-game\\code\\main.py\" />\r\n      <option name=\"PARAMETERS\" value=\"\" />\r\n      <option name=\"SHOW_COMMAND_LINE\" value=\"false\" />\r\n      <option name=\"EMULATE_TERMINAL\" value=\"false\" />\r\n      <option name=\"MODULE_MODE\" value=\"false\" />\r\n      <option name=\"REDIRECT_INPUT\" value=\"false\" />\r\n      <option name=\"INPUT_FILE\" value=\"\" />\r\n      <method v=\"2\" />\r\n    </configuration>\r\n    <configuration name=\"re_main\" type=\"PythonConfigurationType\" factoryName=\"Python\" temporary=\"true\" nameIsGenerated=\"true\">\r\n      <module name=\"Brave-Knight-game\" />\r\n      <option name=\"INTERPRETER_OPTIONS\" value=\"\" />\r\n      <option name=\"PARENT_ENVS\" value=\"true\" />\r\n      <envs>\r\n        <env name=\"PYTHONUNBUFFERED\" value=\"1\" />\r\n      </envs>\r\n      <option name=\"SDK_HOME\" value=\"\" />\r\n      <option name=\"WORKING_DIRECTORY\" value=\"$PROJECT_DIR$/code\" />\r\n      <option name=\"IS_MODULE_SDK\" value=\"true\" />\r\n      <option name=\"ADD_CONTENT_ROOTS\" value=\"true\" />\r\n      <option name=\"ADD_SOURCE_ROOTS\" value=\"true\" />\r\n      <EXTENSION ID=\"PythonCoverageRunConfigurationExtension\" runner=\"coverage.py\" />\r\n      <option name=\"SCRIPT_NAME\" value=\"$PROJECT_DIR$/code/re_main.py\" />\r\n      <option name=\"PARAMETERS\" value=\"\" />\r\n      <option name=\"SHOW_COMMAND_LINE\" value=\"false\" />\r\n      <option name=\"EMULATE_TERMINAL\" value=\"false\" />\r\n      <option name=\"MODULE_MODE\" value=\"false\" />\r\n      <option name=\"REDIRECT_INPUT\" value=\"false\" />\r\n      <option name=\"INPUT_FILE\" value=\"\" />\r\n      <method v=\"2\" />\r\n    </configuration>\r\n    <configuration name=\"start\" type=\"PythonConfigurationType\" factoryName=\"Python\" temporary=\"true\" nameIsGenerated=\"true\">\r\n      <module name=\"Brave-Knight-game\" />\r\n      <option name=\"INTERPRETER_OPTIONS\" value=\"\" />\r\n      <option name=\"PARENT_ENVS\" value=\"true\" />\r\n      <envs>\r\n        <env name=\"PYTHONUNBUFFERED\" value=\"1\" />\r\n      </envs>\r\n      <option name=\"SDK_HOME\" value=\"\" />\r\n      <option name=\"WORKING_DIRECTORY\" value=\"$PROJECT_DIR$/code/second\" />\r\n      <option name=\"IS_MODULE_SDK\" value=\"true\" />\r\n      <option name=\"ADD_CONTENT_ROOTS\" value=\"true\" />\r\n      <option name=\"ADD_SOURCE_ROOTS\" value=\"true\" />\r\n      <EXTENSION ID=\"PythonCoverageRunConfigurationExtension\" runner=\"coverage.py\" />\r\n      <option name=\"SCRIPT_NAME\" value=\"$PROJECT_DIR$/code/second/start.py\" />\r\n      <option name=\"PARAMETERS\" value=\"\" />\r\n      <option name=\"SHOW_COMMAND_LINE\" value=\"false\" />\r\n      <option name=\"EMULATE_TERMINAL\" value=\"false\" />\r\n      <option name=\"MODULE_MODE\" value=\"false\" />\r\n      <option name=\"REDIRECT_INPUT\" value=\"false\" />\r\n      <option name=\"INPUT_FILE\" value=\"\" />\r\n      <method v=\"2\" />\r\n    </configuration>\r\n    <recent_temporary>\r\n      <list>\r\n        <item itemvalue=\"Python.main (1)\" />\r\n        <item itemvalue=\"Python.main (1)\" />\r\n        <item itemvalue=\"Python.main (1)\" />\r\n        <item itemvalue=\"Python.start\" />\r\n        <item itemvalue=\"Python.re_main\" />\r\n      </list>\r\n    </recent_temporary>\r\n  </component>\r\n  <component name=\"SpellCheckerSettings\" RuntimeDictionaries=\"0\" Folders=\"0\" CustomDictionaries=\"0\" DefaultDictionary=\"application-level\" UseSingleDictionary=\"true\" transferred=\"true\" />\r\n  <component name=\"TaskManager\">\r\n    <task active=\"true\" id=\"Default\" summary=\"Default task\">\r\n      <changelist id=\"c81646a3-776d-47eb-8e37-663ce51227fa\" name=\"Changes\" comment=\"\" />\r\n      <created>1673086639814</created>\r\n      <option name=\"number\" value=\"Default\" />\r\n      <option name=\"presentableId\" value=\"Default\" />\r\n      <updated>1673086639814</updated>\r\n      <workItem from=\"1673086642538\" duration=\"2458000\" />\r\n      <workItem from=\"1673089126552\" duration=\"638000\" />\r\n      <workItem from=\"1673089771691\" duration=\"15538000\" />\r\n      <workItem from=\"1673107508381\" duration=\"72000\" />\r\n      <workItem from=\"1673112489862\" duration=\"5182000\" />\r\n      <workItem from=\"1673345152341\" duration=\"7184000\" />\r\n      <workItem from=\"1673369715747\" duration=\"1323000\" />\r\n      <workItem from=\"1673375301750\" duration=\"1120000\" />\r\n      <workItem from=\"1673620952344\" duration=\"1215000\" />\r\n      <workItem from=\"1673626726500\" duration=\"604000\" />\r\n      <workItem from=\"1673687323246\" duration=\"11121000\" />\r\n      <workItem from=\"1673698916281\" duration=\"2412000\" />\r\n      <workItem from=\"1673701368673\" duration=\"1332000\" />\r\n      <workItem from=\"1673727228359\" duration=\"2840000\" />\r\n      <workItem from=\"1673794797982\" duration=\"7890000\" />\r\n      <workItem from=\"1673802923377\" duration=\"15000\" />\r\n      <workItem from=\"1673888457832\" duration=\"6700000\" />\r\n    </task>\r\n    <task id=\"LOCAL-00001\" summary=\"Copied code from lesson. Let's start changes!\">\r\n      <created>1673088816083</created>\r\n      <option name=\"number\" value=\"00001\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00001\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1673088816083</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00002\" summary=\"Copied code from lesson. Let's start changes!\">\r\n      <created>1673088903204</created>\r\n      <option name=\"number\" value=\"00002\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00002\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1673088903204</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00003\" summary=\"Copied code from lesson. Let's start changes!\">\r\n      <created>1673089905163</created>\r\n      <option name=\"number\" value=\"00003\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00003\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1673089905163</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00004\" summary=\"Moved the image upload functions to a separate file\">\r\n      <created>1673090745866</created>\r\n      <option name=\"number\" value=\"00004\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00004\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1673090745866</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00005\" summary=\"Moved the start screen code to a separate file for convenience\">\r\n      <created>1673092710951</created>\r\n      <option name=\"number\" value=\"00005\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00005\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1673092710951</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00006\" summary=\"Moved the start screen code to a separate file for convenience\">\r\n      <created>1673092735024</created>\r\n      <option name=\"number\" value=\"00006\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00006\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1673092735024</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00007\" summary=\"Changed the main screen and the launch of the game. Added an icon\">\r\n      <created>1673094740410</created>\r\n      <option name=\"number\" value=\"00007\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00007\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1673094740410</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00008\" summary=\"Changed the map\">\r\n      <created>1673096741272</created>\r\n      <option name=\"number\" value=\"00008\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00008\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1673096741272</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00009\" summary=\"Changed the start screen. I played with sprites. Added buttons and background to them\">\r\n      <created>1673107356243</created>\r\n      <option name=\"number\" value=\"00009\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00009\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1673107356243</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00010\" summary=\"Some little changes\">\r\n      <created>1673128727103</created>\r\n      <option name=\"number\" value=\"00010\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00010\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1673128727103</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00011\" summary=\"Some little changes\">\r\n      <created>1673128747996</created>\r\n      <option name=\"number\" value=\"00011\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00011\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1673128747996</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00012\" summary=\"Added moving, start location and player sprite\">\r\n      <created>1673346665810</created>\r\n      <option name=\"number\" value=\"00012\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00012\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1673346665810</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00013\" summary=\"Added changing locations from the first to the third\">\r\n      <created>1673352774088</created>\r\n      <option name=\"number\" value=\"00013\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00013\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1673352774088</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00014\" summary=\"Added character animation\">\r\n      <created>1673696071929</created>\r\n      <option name=\"number\" value=\"00014\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00014\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1673696071929</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00015\" summary=\"Fixed character animation again. Lost a lot of files and work X(\">\r\n      <created>1673727604031</created>\r\n      <option name=\"number\" value=\"00015\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00015\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1673727604031</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00016\" summary=\"Added some walls and map loading\">\r\n      <created>1673732393880</created>\r\n      <option name=\"number\" value=\"00016\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00016\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1673732393880</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00017\" summary=\"Changed some graphic and added collision\">\r\n      <created>1673802725797</created>\r\n      <option name=\"number\" value=\"00017\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00017\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1673802725797</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00018\" summary=\"Added decorations and tiles\">\r\n      <created>1673895018533</created>\r\n      <option name=\"number\" value=\"00018\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00018\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1673895018533</updated>\r\n    </task>\r\n    <option name=\"localTasksCounter\" value=\"19\" />\r\n    <servers />\r\n  </component>\r\n  <component name=\"TypeScriptGeneratedFilesManager\">\r\n    <option name=\"version\" value=\"3\" />\r\n  </component>\r\n  <component name=\"Vcs.Log.Tabs.Properties\">\r\n    <option name=\"TAB_STATES\">\r\n      <map>\r\n        <entry key=\"MAIN\">\r\n          <value>\r\n            <State>\r\n              <option name=\"FILTERS\">\r\n                <map>\r\n                  <entry key=\"branch\">\r\n                    <value>\r\n                      <list>\r\n                        <option value=\"origin/main\" />\r\n                      </list>\r\n                    </value>\r\n                  </entry>\r\n                </map>\r\n              </option>\r\n            </State>\r\n          </value>\r\n        </entry>\r\n      </map>\r\n    </option>\r\n  </component>\r\n  <component name=\"VcsManagerConfiguration\">\r\n    <MESSAGE value=\"I did nothing...\" />\r\n    <MESSAGE value=\"Copied code from lesson. Let's start changes!\" />\r\n    <MESSAGE value=\"Moved the image upload functions to a separate file\" />\r\n    <MESSAGE value=\"Moved the start screen code to a separate file for convenience\" />\r\n    <MESSAGE value=\"Changed the main screen and the launch of the game. Added an icon\" />\r\n    <MESSAGE value=\"Changed the map\" />\r\n    <MESSAGE value=\"Changed the start screen. I played with sprites. Added buttons and background to them\" />\r\n    <MESSAGE value=\"Some little changes\" />\r\n    <MESSAGE value=\"Added moving, start location and player sprite\" />\r\n    <MESSAGE value=\"Added changing locations from the first to the third\" />\r\n    <MESSAGE value=\"Added character animation\" />\r\n    <MESSAGE value=\"Fixed character animation again. Lost a lot of files and work X(\" />\r\n    <MESSAGE value=\"Added some walls and map loading\" />\r\n    <MESSAGE value=\"Changed some graphic and added collision\" />\r\n    <MESSAGE value=\"Added decorations and tiles\" />\r\n    <option name=\"LAST_COMMIT_MESSAGE\" value=\"Added decorations and tiles\" />\r\n  </component>\r\n  <component name=\"com.intellij.coverage.CoverageDataManagerImpl\">\r\n    <SUITE FILE_PATH=\"coverage/Brave_Knight_game$main__1_.coverage\" NAME=\"main (1) Coverage Results\" MODIFIED=\"1673896734170\" SOURCE_PROVIDER=\"com.intellij.coverage.DefaultCoverageFileProvider\" RUNNER=\"coverage.py\" COVERAGE_BY_TEST_ENABLED=\"true\" COVERAGE_TRACING_ENABLED=\"false\" WORKING_DIRECTORY=\"$PROJECT_DIR$/code\" />\r\n    <SUITE FILE_PATH=\"coverage/Brave_Knight_game$start.coverage\" NAME=\"start Coverage Results\" MODIFIED=\"1673722786033\" SOURCE_PROVIDER=\"com.intellij.coverage.DefaultCoverageFileProvider\" RUNNER=\"coverage.py\" COVERAGE_BY_TEST_ENABLED=\"true\" COVERAGE_TRACING_ENABLED=\"false\" WORKING_DIRECTORY=\"$PROJECT_DIR$/code/second\" />\r\n    <SUITE FILE_PATH=\"coverage/Brave_Knight_game$main.coverage\" NAME=\"main Coverage Results\" MODIFIED=\"1673089668451\" SOURCE_PROVIDER=\"com.intellij.coverage.DefaultCoverageFileProvider\" RUNNER=\"coverage.py\" COVERAGE_BY_TEST_ENABLED=\"true\" COVERAGE_TRACING_ENABLED=\"false\" WORKING_DIRECTORY=\"$PROJECT_DIR$/py_files\" />\r\n    <SUITE FILE_PATH=\"coverage/Brave_Knight_game$re_main.coverage\" NAME=\"re_main Coverage Results\" MODIFIED=\"1673100786327\" SOURCE_PROVIDER=\"com.intellij.coverage.DefaultCoverageFileProvider\" RUNNER=\"coverage.py\" COVERAGE_BY_TEST_ENABLED=\"true\" COVERAGE_TRACING_ENABLED=\"false\" WORKING_DIRECTORY=\"$PROJECT_DIR$/code\" />\r\n  </component>\r\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/workspace.xml b/.idea/workspace.xml
+--- a/.idea/workspace.xml	(revision ed02ad9c94421cf2da7ffbf2800a70ca2d43863f)
++++ b/.idea/workspace.xml	(date 1674308207287)
+@@ -4,11 +4,15 @@
+     <option name="autoReloadType" value="SELECTIVE" />
+   </component>
+   <component name="ChangeListManager">
+-    <list default="true" id="c81646a3-776d-47eb-8e37-663ce51227fa" name="Changes" comment="Added decorations and tiles">
++    <list default="true" id="c81646a3-776d-47eb-8e37-663ce51227fa" name="Changes" comment="Added tavern. I will continue work">
++      <change afterPath="$PROJECT_DIR$/code/in_tavern.py" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/data/tavern.map" afterDir="false" />
+       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+       <change beforePath="$PROJECT_DIR$/code/Player.py" beforeDir="false" afterPath="$PROJECT_DIR$/code/Player.py" afterDir="false" />
+       <change beforePath="$PROJECT_DIR$/code/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/code/main.py" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/code/sprites.py" beforeDir="false" afterPath="$PROJECT_DIR$/code/sprites.py" afterDir="false" />
+       <change beforePath="$PROJECT_DIR$/data/decorations_map.map" beforeDir="false" afterPath="$PROJECT_DIR$/data/decorations_map.map" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/data/map.map" beforeDir="false" afterPath="$PROJECT_DIR$/data/map.map" afterDir="false" />
+     </list>
+     <option name="SHOW_DIALOG" value="false" />
+     <option name="HIGHLIGHT_CONFLICTS" value="true" />
+@@ -40,23 +44,23 @@
+     <option name="hideEmptyMiddlePackages" value="true" />
+     <option name="showLibraryContents" value="true" />
+   </component>
+-  <component name="PropertiesComponent"><![CDATA[{
+-  "keyToString": {
+-    "RunOnceActivity.OpenProjectViewOnStart": "true",
+-    "RunOnceActivity.ShowReadmeOnStart": "true",
+-    "WebServerToolWindowFactoryState": "false",
+-    "last_opened_file_path": "D:/1/2/4 - camera & ysort",
+-    "node.js.detected.package.eslint": "true",
+-    "node.js.detected.package.tslint": "true",
+-    "node.js.selected.package.eslint": "(autodetect)",
+-    "node.js.selected.package.tslint": "(autodetect)",
+-    "settings.editor.selected.configurable": "preferences.sourceCode.Python"
++  <component name="PropertiesComponent">{
++  &quot;keyToString&quot;: {
++    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
++    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
++    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
++    &quot;last_opened_file_path&quot;: &quot;D:/1/2/Brave-Knight-game&quot;,
++    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
++    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
++    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
++    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
++    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.sourceCode.Python&quot;
+   }
+-}]]></component>
++}</component>
+   <component name="RecentsManager">
+     <key name="MoveFile.RECENT_KEYS">
+-      <recent name="D:\1\2\Brave-Knight-game\data" />
+       <recent name="D:\1\2\Brave-Knight-game\code" />
++      <recent name="D:\1\2\Brave-Knight-game\data" />
+       <recent name="D:\1\2\Brave-Knight-game" />
+       <recent name="D:\1\2\Brave-Knight-game\py_files" />
+     </key>
+@@ -250,7 +254,9 @@
+       <workItem from="1673727228359" duration="2840000" />
+       <workItem from="1673794797982" duration="7890000" />
+       <workItem from="1673802923377" duration="15000" />
+-      <workItem from="1673888457832" duration="6700000" />
++      <workItem from="1673888457832" duration="6927000" />
++      <workItem from="1673970473859" duration="3974000" />
++      <workItem from="1674306019384" duration="2170000" />
+     </task>
+     <task id="LOCAL-00001" summary="Copied code from lesson. Let's start changes!">
+       <created>1673088816083</created>
+@@ -378,7 +384,14 @@
+       <option name="project" value="LOCAL" />
+       <updated>1673895018533</updated>
+     </task>
+-    <option name="localTasksCounter" value="19" />
++    <task id="LOCAL-00019" summary="Added tavern. I will continue work">
++      <created>1673896950689</created>
++      <option name="number" value="00019" />
++      <option name="presentableId" value="LOCAL-00019" />
++      <option name="project" value="LOCAL" />
++      <updated>1673896950689</updated>
++    </task>
++    <option name="localTasksCounter" value="20" />
+     <servers />
+   </component>
+   <component name="TypeScriptGeneratedFilesManager">
+@@ -423,10 +436,11 @@
+     <MESSAGE value="Added some walls and map loading" />
+     <MESSAGE value="Changed some graphic and added collision" />
+     <MESSAGE value="Added decorations and tiles" />
+-    <option name="LAST_COMMIT_MESSAGE" value="Added decorations and tiles" />
++    <MESSAGE value="Added tavern. I will continue work" />
++    <option name="LAST_COMMIT_MESSAGE" value="Added tavern. I will continue work" />
+   </component>
+   <component name="com.intellij.coverage.CoverageDataManagerImpl">
+-    <SUITE FILE_PATH="coverage/Brave_Knight_game$main__1_.coverage" NAME="main (1) Coverage Results" MODIFIED="1673896734170" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/code" />
++    <SUITE FILE_PATH="coverage/Brave_Knight_game$main__1_.coverage" NAME="main (1) Coverage Results" MODIFIED="1674308150229" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/code" />
+     <SUITE FILE_PATH="coverage/Brave_Knight_game$start.coverage" NAME="start Coverage Results" MODIFIED="1673722786033" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/code/second" />
+     <SUITE FILE_PATH="coverage/Brave_Knight_game$main.coverage" NAME="main Coverage Results" MODIFIED="1673089668451" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/py_files" />
+     <SUITE FILE_PATH="coverage/Brave_Knight_game$re_main.coverage" NAME="re_main Coverage Results" MODIFIED="1673100786327" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/code" />
+Index: code/in_tavern.py
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/code/in_tavern.py b/code/in_tavern.py
+new file mode 100644
+--- /dev/null	(date 1674308322164)
++++ b/code/in_tavern.py	(date 1674308322164)
+@@ -0,0 +1,36 @@
++import sys
++import pygame
++
++from funcs import load_level, load_image
++from sprites import Tile, Object, all_sprites
++
++screen_size = width, height = (1280, 800)
++
++
++def tavern_screen(player):
++	from sprites import hero_group
++	running = True
++	screen = pygame.display.set_mode(screen_size)
++	screen.fill((0, 0, 0))
++	tavern = load_level('tavern.map')
++	from sprites import tile_width, tile_height
++	for y in range(len(tavern)):
++		for x in range(len(tavern[y])):
++			if tavern[y][x] == '.':
++				Tile(load_image('wood_boards.png'), x, y)
++			elif tavern[y][x] == '#':
++				Object(load_image('wood_boards.png'), x * tile_width, y * tile_height, (60, 60))
++
++	while running:
++		for event in pygame.event.get():
++			if event.type == pygame.QUIT:
++				running = False
++			elif event.type == pygame.MOUSEBUTTONDOWN:
++				player.location = 1
++				return
++		player.update()
++		hero_group.draw(screen)
++		all_sprites.custom_draw(player)
++		pygame.display.flip()
++	pygame.quit()
++	sys.exit()
+\ No newline at end of file

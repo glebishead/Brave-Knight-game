@@ -1,17 +1,15 @@
 import pygame
-from sprites import Sprite, all_sprites, objects, hero_group
+from sprites import Sprite, objects, hero_group
 
 
 class Player(Sprite):
-	def __init__(self, sheet, columns, rows, pos_x, pos_y, start_location=1):
-		super().__init__([all_sprites, hero_group])
+	def __init__(self, group, sheet, columns, rows, pos_x, pos_y, start_location=1):
+		super().__init__([group, hero_group])
 		self.frames = []
 		self.cut_sheet(sheet, columns, rows, pos_x, pos_y)
 		self.cur_frame = 0
 		self.image = self.frames[self.cur_frame]
-		self.t = pygame.time.get_ticks()
 		self.pos = (pos_x, pos_y)
-		self.mask = pygame.mask.from_surface(self.image)
 		self.speed = 5
 		self.is_moving = False
 		self.direction = None
