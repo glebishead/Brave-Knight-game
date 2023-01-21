@@ -15,6 +15,7 @@ screen = pygame.display.set_mode(size)
 clock = pygame.time.Clock()
 fps = 12
 quit = False  # для выхода из игры
+flag_lose = False
 
 
 class Inventory:  # инвентарь
@@ -79,7 +80,6 @@ class Inventory:  # инвентарь
             self.bomb_btn.disable()
 
         self.menu.update()
-
 
     def cancel(self):  # выход из меню инвентаря
         self.hide()
@@ -167,6 +167,7 @@ class Player(pygame.sprite.Sprite):  # игрок
         else:
             self.money += enemy.money
             menu.win_message()
+            enemy.cur_hp = enemy.max_hp
 
     def retreat(self, menu):  # отступить и потерять до 50 монет
         if self.money >= 50:
@@ -175,6 +176,8 @@ class Player(pygame.sprite.Sprite):  # игрок
             drop = self.money
         self.money -= drop
         menu.retreat_message(drop)
+        global flag_lose
+        flag_lose = True
 
     def end(self):  # окончание процесса боя
         global quit
@@ -331,19 +334,19 @@ class Menu:  # меню
     def retreat_message(self, drop):  # сообщение о побеге игрока из боя
         screen.fill((0, 0, 0), pygame.Rect(0, height * 0.65, width, height))
         self.message('Вы решили отступить!')
-        self.message(f'Вы потерали {drop} монет!', 1)
+        self.message(f'Вы потеряли {drop} монет!', 1)
         self.update()
         self.wait(1)
         self.player.end()
 
 
 def main(name):  # игровой процесс, в name задается имя противника: 'imp_red' или 'demon_axe_red' (от этого зависят статы, спрайты и музыка)
-    if name == 'imp_red':
-        pygame.mixer.music.load('..\data\Tooth and Claw.mp3')
-    else:
-        pygame.mixer.music.load('..\data\Death or Sovngard.mp3')
-    pygame.mixer.music.play()
-    pygame.mixer.music.set_volume(0.5)
+    # if name == 'imp_red':
+    #     pygame.mixer.music.load('..\data\Tooth and Claw.mp3')
+    # else:
+    #     pygame.mixer.music.load('..\data\Death or Sovngard.mp3')
+    # pygame.mixer.music.play()
+    # pygame.mixer.music.set_volume(0.5)
 
     con = sqlite3.connect("..\\data\\fight.db")  # работа с бд
     cur = con.cursor()
@@ -378,12 +381,20 @@ def main(name):  # игровой процесс, в name задается им�
     menu = Menu(player, enemy, attack, items, retreat)
     inventory = Inventory(menu, player, enemy, cur)
 
+    global quit
+    global flag_lose
     running = True
     while running:
         events = pygame.event.get()
         for event in events:
-            if event.type == pygame.QUIT or quit == True:  # проверка на quit нужна для завершения боя
+            if event.type == pygame.QUIT:  # проверка на quit нужна для завершения боя
                 running = False
+            if quit:
+                quit = False
+                if flag_lose:
+                    flag_lose = False
+                    return True
+                return False
 
         screen.fill((0, 0, 0), pygame.Rect(0, 0, width, height * 0.65))  # обновление экрана
         menu.update()
@@ -397,5 +408,6 @@ def main(name):  # игровой процесс, в name задается им�
     pygame.quit()
 
 
-if __name__ == '__main__':
-    main('demon_axe_red')
+# if __name__ == '__main__':
+#     main('imp_red')
+#     main('demon_axe_red')

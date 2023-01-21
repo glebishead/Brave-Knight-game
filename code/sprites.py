@@ -22,10 +22,33 @@ class Sprite(pygame.sprite.Sprite):
 
 
 class Object(Sprite):
-	def __init__(self, image, x, y, true_size):
-		super().__init__([all_sprites, objects])
+	def __init__(self, image, x, y, true_size, *groups):
+		super().__init__([*groups, objects])
 		self.image = pygame.transform.scale(image, true_size)
 		self.rect = self.image.get_rect().move(x, y)
+
+
+class Enemy(Object):
+	def __init__(self, image, x, y, true_size, group):
+		super().__init__(image, x, y, true_size, group, enemy_group)
+	
+	def fight(self, player):
+		if self.rect.colliderect(player.rect):
+			from fight import main
+			if player.imp_killed < 5:
+				if not main('imp_red'):
+					self.kill()
+					player.imp_killed += 1
+				else:
+					player.pos = player.pos[0] - player.speed, player.pos[1] + player.speed
+					player.rect = player.image.get_rect().move(player.pos)
+			elif not main('demon_axe_red'):
+					from end  import end_screen
+					end_screen()
+			else:
+				player.pos = player.pos[0] - player.speed, player.pos[1] + player.speed
+				player.rect = player.image.get_rect().move(player.pos)
+				
 
 
 class Background(Sprite):
@@ -41,11 +64,11 @@ tile_width = tile_height = 50
 
 
 class Tile(Sprite):
-	def __init__(self, image, pos_x, pos_y):
-		super().__init__([tiles, all_sprites])
+	def __init__(self, image, pos_x, pos_y, group):
+		super().__init__([tiles, group])
 		self.image = pygame.transform.scale(image, (tile_width, tile_height))
 		self.rect = self.image.get_rect().move(
-			tile_width * pos_x, tile_height * pos_y)
+			pos_x, pos_y)
 
 
 class CameraGroup(SpriteGroup):
@@ -70,8 +93,11 @@ class CameraGroup(SpriteGroup):
 
 sprite_group = SpriteGroup()
 all_sprites = CameraGroup()
+
+tavern_group = CameraGroup()
+enemy_group = SpriteGroup()
+
 objects = SpriteGroup()
 hero_group = CameraGroup()
 tiles = SpriteGroup()
 btn_bg_group = SpriteGroup()
-trees_group = SpriteGroup()
