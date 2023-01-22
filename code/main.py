@@ -13,7 +13,7 @@ class Game:
 		pygame.init()
 		self.screen_size = (1280, 800)
 		self.screen = pygame.display.set_mode(self.screen_size)
-		pygame.mixer.music.load('bg_music.wav')
+		pygame.mixer.music.load('../data/bg_music.wav')
 		pygame.mixer.music.play(-1)
 		pygame.mixer.music.set_volume(0.2)
 		

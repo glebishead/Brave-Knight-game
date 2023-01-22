@@ -341,12 +341,12 @@ class Menu:  # меню
 
 
 def main(name):  # игровой процесс, в name задается имя противника: 'imp_red' или 'demon_axe_red' (от этого зависят статы, спрайты и музыка)
-    # if name == 'imp_red':
-    #     pygame.mixer.music.load('..\data\Tooth and Claw.mp3')
-    # else:
-    #     pygame.mixer.music.load('..\data\Death or Sovngard.mp3')
-    # pygame.mixer.music.play()
-    # pygame.mixer.music.set_volume(0.5)
+    if name == 'imp_red':
+        pygame.mixer.music.load('../data/Tooth-and-Claw.wav')
+    else:
+        pygame.mixer.music.load('../data/Death-or-Sovngard.wav')
+    pygame.mixer.music.play()
+    pygame.mixer.music.set_volume(0.2)
 
     con = sqlite3.connect("..\\data\\fight.db")  # работа с бд
     cur = con.cursor()
@@ -408,6 +408,6 @@ def main(name):  # игровой процесс, в name задается им�
     pygame.quit()
 
 
-# if __name__ == '__main__':
-#     main('imp_red')
-#     main('demon_axe_red')
+if __name__ == '__main__':
+    main('imp_red')
+    main('demon_axe_red')

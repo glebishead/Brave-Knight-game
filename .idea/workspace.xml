@@ -4,9 +4,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c81646a3-776d-47eb-8e37-663ce51227fa" name="Changes" comment="Almost all done, but need some debugs">
+    <list default="true" id="c81646a3-776d-47eb-8e37-663ce51227fa" name="Changes" comment="Added music">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/code/bg_music.wav" beforeDir="false" afterPath="$PROJECT_DIR$/data/bg_music.wav" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/code/fight.py" beforeDir="false" afterPath="$PROJECT_DIR$/code/fight.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/code/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/code/main.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/code/sprites.py" beforeDir="false" afterPath="$PROJECT_DIR$/code/sprites.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/Death or Sovngard.mp3" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/Tooth and Claw.mp3" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -306,7 +310,7 @@
       <workItem from="1674216687255" duration="3200000" />
       <workItem from="1674315488130" duration="86000" />
       <workItem from="1674318634415" duration="12551000" />
-      <workItem from="1674374206861" duration="3072000" />
+      <workItem from="1674374206861" duration="3682000" />
     </task>
     <task id="LOCAL-00001" summary="Copied code from lesson. Let's start changes!">
       <created>1673088816083</created>
@@ -462,7 +466,14 @@
       <option name="project" value="LOCAL" />
       <updated>1674377002523</updated>
     </task>
-    <option name="localTasksCounter" value="23" />
+    <task id="LOCAL-00023" summary="Added music">
+      <created>1674377353082</created>
+      <option name="number" value="00023" />
+      <option name="presentableId" value="LOCAL-00023" />
+      <option name="project" value="LOCAL" />
+      <updated>1674377353082</updated>
+    </task>
+    <option name="localTasksCounter" value="24" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -510,15 +521,16 @@
     <MESSAGE value="Added fight with animations (fight.py and sprites by Artem)" />
     <MESSAGE value="Added tavern and seller, but without dialog with him" />
     <MESSAGE value="Almost all done, but need some debugs" />
-    <option name="LAST_COMMIT_MESSAGE" value="Almost all done, but need some debugs" />
+    <MESSAGE value="Added music" />
+    <option name="LAST_COMMIT_MESSAGE" value="Added music" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/Brave_Knight_game$main__1_.coverage" NAME="main (1) Coverage Results" MODIFIED="1674377304759" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/code" />
+    <SUITE FILE_PATH="coverage/Brave_Knight_game$main__1_.coverage" NAME="main (1) Coverage Results" MODIFIED="1674377789150" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/code" />
     <SUITE FILE_PATH="coverage/Brave_Knight_game$start.coverage" NAME="start Coverage Results" MODIFIED="1673722786033" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/code/second" />
     <SUITE FILE_PATH="coverage/Brave_Knight_game$main.coverage" NAME="main Coverage Results" MODIFIED="1673089668451" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/py_files" />
     <SUITE FILE_PATH="coverage/Brave_Knight_game$check.coverage" NAME="check Coverage Results" MODIFIED="1674218547692" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/code" />
     <SUITE FILE_PATH="coverage/Brave_Knight_game$Unnamed.coverage" NAME="Unnamed Coverage Results" MODIFIED="1674308518847" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
     <SUITE FILE_PATH="coverage/Brave_Knight_game$re_main.coverage" NAME="re_main Coverage Results" MODIFIED="1674308641511" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/code" />
-    <SUITE FILE_PATH="coverage/Brave_Knight_game$fight.coverage" NAME="fight Coverage Results" MODIFIED="1674329412498" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/code" />
+    <SUITE FILE_PATH="coverage/Brave_Knight_game$fight.coverage" NAME="fight Coverage Results" MODIFIED="1674377744701" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/code" />
   </component>
 </project>
