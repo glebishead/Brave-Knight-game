@@ -2,7 +2,7 @@ import pygame
 from sprites import Sprite, objects, hero_group
 
 
-class Player(Sprite):
+class Player_pix(Sprite):
 	def __init__(self, group, sheet, columns, rows, pos_x, pos_y, start_location=1):
 		super().__init__([group, hero_group])
 		self.frames = []
@@ -16,6 +16,7 @@ class Player(Sprite):
 		self.flag_le = False
 		self.location = start_location
 		self.imp_killed = 0
+		self.money = 50
 	
 	def cut_sheet(self, sheet, columns, rows, x, y):
 		self.rect = pygame.Rect(-10, -100, sheet.get_width() // columns,

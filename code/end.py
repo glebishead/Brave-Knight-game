@@ -10,7 +10,7 @@ screen_size = width, height = (1280, 800)
 def end_screen():
     running = True
     screen = pygame.display.set_mode(screen_size)
-    fon = pygame.transform.scale(load_image('end_bg.jpg'), screen_size)
+    fon = pygame.transform.scale(load_image('images\\end_bg.jpg'), screen_size)
     screen.blit(fon, (0, 0))
 
     while running:

@@ -15,12 +15,12 @@ def tavern_screen(player, clock, FPS):
 	for y in range(len(tavern)):
 		for x in range(len(tavern[y])):
 			if tavern[y][x] == '.':
-				Tile(load_image('wood_boards.png'), tile_width * x - 1000, tile_height * y, tavern_group)
+				Tile(load_image('decorations\\wood_boards.png'), tile_width * x - 1000, tile_height * y, tavern_group)
 			elif tavern[y][x] == '#':
-				Object(load_image('wall2.png'), x * tile_width - 1000, y * tile_height, (60, 60), tavern_group)
+				Object(load_image('tiles\\wall2.png'), x * tile_width - 1000, y * tile_height, (60, 60), tavern_group)
 			elif tavern[y][x] == '@':
-				Tile(load_image('wood_boards.png'), tile_width * x - 1000, tile_height * y, tavern_group)
-				seller = Object(pygame.transform.flip(load_image('seller.png'), True, False),
+				Tile(load_image('decorations\\wood_boards.png'), tile_width * x - 1000, tile_height * y, tavern_group)
+				seller = Object(pygame.transform.flip(load_image('images\\seller.png'), True, False),
 				       x * tile_width - 1000, y * tile_height, (40, 60), tavern_group)
 	player.pos = (-800, 410)
 	tavern_group.get_surface()

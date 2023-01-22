@@ -43,7 +43,7 @@ class Enemy(Object):
 					player.pos = player.pos[0] - player.speed, player.pos[1] + player.speed
 					player.rect = player.image.get_rect().move(player.pos)
 			else:
-				pygame.mixer.music.load('../data/Death-or-Sovngard.wav')
+				pygame.mixer.music.load('../data/music/Death-or-Sovngard.wav')
 				pygame.mixer.music.play(-1)
 				pygame.mixer.music.set_volume(0.2)
 				if not main('demon_axe_red'):
@@ -57,7 +57,7 @@ class Enemy(Object):
 class Background(Sprite):
 	def __init__(self, w, h, x, y):
 		super().__init__(btn_bg_group)
-		self.image = load_image('bg_button.png')
+		self.image = load_image('images\\bg_button.png')
 		self.image = pygame.transform.scale(self.image, (w // 3 - 10, h // 10 - 5))
 		self.rect = self.image.get_rect().move(
 			x, y)

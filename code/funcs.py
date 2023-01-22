@@ -19,7 +19,7 @@ def load_image(name, color_key=None):
 
 
 def load_level(name):
-    fullname = os.path.join('../data', name)
+    fullname = os.path.join('../data\\maps', name)
     with open(fullname, 'r') as mapFile:
         level_map = [line.strip() for line in mapFile]
 
