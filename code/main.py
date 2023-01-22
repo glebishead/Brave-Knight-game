@@ -100,6 +100,9 @@ class Game:
 				self.player.location = 1
 				
 			if self.player.pos[0] >= 3000 and self.quest_started:
+				pygame.mixer.music.load('../data/Tooth-and-Claw.wav')
+				pygame.mixer.music.play(-1)
+				pygame.mixer.music.set_volume(0.2)
 				self.fon = pygame.transform.scale(load_image('dark_fon.png'), self.screen_size)
 				self.generate_level3()
 				self.quest_started = False

@@ -205,7 +205,7 @@ class Enemy(pygame.sprite.Sprite):  # противник
             y = 100
         else:
             y = 20
-        hp_bar = ProgressBar(screen, 760, y, 300, 40, lambda: self.cur_hp / self.max_hp, completedColour=(255, 0, 0))  # полоска хп
+        self.hp_bar = ProgressBar(screen, 760, y, 300, 40, lambda: self.cur_hp / self.max_hp, completedColour=(255, 0, 0))  # полоска хп
 
     def update(self):
         self.index += 1
@@ -341,13 +341,6 @@ class Menu:  # меню
 
 
 def main(name):  # игровой процесс, в name задается имя противника: 'imp_red' или 'demon_axe_red' (от этого зависят статы, спрайты и музыка)
-    if name == 'imp_red':
-        pygame.mixer.music.load('../data/Tooth-and-Claw.wav')
-    else:
-        pygame.mixer.music.load('../data/Death-or-Sovngard.wav')
-    pygame.mixer.music.play()
-    pygame.mixer.music.set_volume(0.2)
-
     con = sqlite3.connect("..\\data\\fight.db")  # работа с бд
     cur = con.cursor()
 
@@ -390,6 +383,7 @@ def main(name):  # игровой процесс, в name задается им�
             if event.type == pygame.QUIT:  # проверка на quit нужна для завершения боя
                 running = False
             if quit:
+                menu.enemy.hp_bar.hide()
                 quit = False
                 if flag_lose:
                     flag_lose = False
@@ -408,6 +402,6 @@ def main(name):  # игровой процесс, в name задается им�
     pygame.quit()
 
 
-if __name__ == '__main__':
-    main('imp_red')
-    main('demon_axe_red')
+# if __name__ == '__main__':
+#     main('imp_red')
+#     main('demon_axe_red')

@@ -42,12 +42,16 @@ class Enemy(Object):
 				else:
 					player.pos = player.pos[0] - player.speed, player.pos[1] + player.speed
 					player.rect = player.image.get_rect().move(player.pos)
-			elif not main('demon_axe_red'):
+			else:
+				pygame.mixer.music.load('../data/Death-or-Sovngard.wav')
+				pygame.mixer.music.play(-1)
+				pygame.mixer.music.set_volume(0.2)
+				if not main('demon_axe_red'):
 					from end import end_screen
 					end_screen()
-			else:
-				player.pos = player.pos[0] - player.speed, player.pos[1] + player.speed
-				player.rect = player.image.get_rect().move(player.pos)
+				else:
+					player.pos = player.pos[0] - player.speed, player.pos[1] + player.speed
+					player.rect = player.image.get_rect().move(player.pos)
 				
 
 class Background(Sprite):
