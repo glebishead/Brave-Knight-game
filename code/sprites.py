@@ -43,13 +43,12 @@ class Enemy(Object):
 					player.pos = player.pos[0] - player.speed, player.pos[1] + player.speed
 					player.rect = player.image.get_rect().move(player.pos)
 			elif not main('demon_axe_red'):
-					from end  import end_screen
+					from end import end_screen
 					end_screen()
 			else:
 				player.pos = player.pos[0] - player.speed, player.pos[1] + player.speed
 				player.rect = player.image.get_rect().move(player.pos)
 				
-
 
 class Background(Sprite):
 	def __init__(self, w, h, x, y):
